@@ -60,7 +60,7 @@ public class mainActivity extends FragmentActivity implements
 
         setContentView(R.layout.main);
 
-        // TEST INVIO JSON
+        // TEST INVIO JSON DEBUG
         //ServerConnection sendData = new ServerConnection();
         //sendData.sendData(this);
 
