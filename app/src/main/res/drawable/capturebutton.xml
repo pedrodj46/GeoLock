@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- simile a mybutton ma con pulsanti trasparenti creati appositamente per la camera -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:state_pressed="true" >
+        <shape android:shape="rectangle"  >
+            <corners android:radius="3dip" />
+            <stroke android:width="1dip" android:color="#82238027" />
+            <gradient
+                android:angle="-90"
+                android:startColor="#82345937"
+                android:endColor="#821f8012"  />
+        </shape>
+    </item>
+    <item android:state_focused="true">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="3dip" />
+            <stroke android:width="1dip"
+                android:color="#821f8012" />
+            <solid android:color="#82588559"/>
+        </shape>
+    </item>
+    <item >
+        <shape android:shape="rectangle"  >
+            <corners android:radius="3dip" />
+            <stroke android:width="1dip" android:color="#8224b339" />
+            <gradient android:angle="-90"
+                android:startColor="#8290ba8d"
+                android:endColor="#821f8012" />
+        </shape>
+    </item>
+</selector>

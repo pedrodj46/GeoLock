@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">GeoLock</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- BUTTONS FRAGMENT -->
+    <string name="button01">CAMERA</string>
+    <string name="button02">GALLERIA</string>
+    <string name="button03">POSIZIONI</string>
+    <string name="button04">CALIBRAZIONE</string>
+    <string name="button05">INVIA FOTO</string>
+    <string name="button06">PROVA FRAGMENT</string>
+
+    <!-- GPS CHECK STRINGS -->
+    <string name="gps_network_not_enabled">GPS DISATTIVATO</string>
+    <string name="open_location_settings">ATTIVA</string>
+    <string name="Cancel">ANNULLA</string>
+
+    <!-- CAMERA FRAGMENT -->
+    <string name="button_back">ANNULLA</string>
+    <string name="button_capture">SCATTA</string>
+    <string name="button_switch">MIRINO</string>
+
+    <!-- image caotured fragment -->
+    <string name="confirm_button">CONFERMA</string>
+    <string name="retake_button">RISCATTA</string>
+
+    <!-- image details fragment -->
+    <string name="nomeFoto">Inserire Nome Foto</string>
+    <string name="coordGps">Coordinate GPS Foto</string>
+    <string name="direzGradi">0.0 gradi Nord</string>
+    <string name="selezDirez">Selezionare la direzione in cui il soggetto si stava muovendo</string>
+    <string name="selezDirez2">Direzioni</string>
+    <string name="detailsCheckBox">Il soggetto era fermo</string>
+    <string name="selezDirez3">Direzione di orientamento del dispositivo</string>
+    <string name="selezDirez4">Direzione di movimento del soggetto</string>
+    <string name="selezDist">Distanza</string>
+    <string name="selezDist2">Inserire la distanza in metri tra il dispositivo e il soggetto
+        fotografato</string>
+    <string name="buttonConf">CONFERMA</string>
+
+    <!-- FOTO SALVATA -->
+    <string name="photo_saved">FOTO SALVATA</string>
+    <string name="annulla">NUOVA FOTO</string>
+    <string name="accetta">MENU</string>
+
+    <!-- Drop-Down Menu -->
+    <string name="direction_prompt">Choose a direction</string>
+
+    <!-- gallery photo details fragment -->
+    <string name="name_section">Nome:</string>
+    <string name="lat_section">Latitudine:</string>
+    <string name="long_section">Longitudine:</string>
+    <string name="address_section">Indirizzo:</string>
+    <string name="direzobs_section">Direzione in cui era rivolto il dispositivo:</string>
+    <string name="direzsub_section">Direzione di movimento del soggetto:</string>
+    <string name="distance">Distanza tra il dispositivo e il soggetto:</string>
+    <string name="transfered">Inviata:</string>
+
+    <!-- utility calibrazione -->
+    <string name="calibration">Calibrazione Bussola</string>
+    <string name="description">Muovere e ruotare il telefono formando un otto per tre volte.
+    </string>
+
+</resources>

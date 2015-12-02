@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.michele.fragmentexample" >
+
+    <!-- permessi per l'uso della camera -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <!-- permesso per salvataggio foto -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- permesso autofocus -->
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <!-- geotag permissions -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- internet usage permissions -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- google maps permissions -->
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+
+    <!-- network information access permissions (not internet usage) -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application
+        android:name="com.michele.appdegree.globals"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.michele.appdegree.mainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCJkS9mreIM1J6jg13jzZOyvT-1LUNqsK0"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+    </application>
+
+
+    <!-- ATTENZIONE: non alterare i metadata: il primo value e' il codice di accesso al google
+                     maps API, alterarlo senza avere a disposizione un'alternativa valida
+                     rende inaccessibili le mappe del server Google -->
+
+</manifest>

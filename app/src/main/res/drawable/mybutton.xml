@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- pulsanti personalizzati utilizzati nei vari fragment -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:state_pressed="true" >
+        <shape android:shape="rectangle"  >
+            <corners android:radius="3dip" />
+            <stroke android:width="1dip" android:color="#238027" />
+            <gradient android:angle="-90"
+                android:startColor="#345937"
+                android:endColor="#1f8012"  />
+        </shape>
+    </item>
+    <item android:state_focused="true">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="3dip" />
+            <stroke android:width="1dip" android:color="#1f8012" />
+            <solid android:color="#588559"/>
+        </shape>
+    </item>
+    <item >
+        <shape android:shape="rectangle"  >
+            <corners android:radius="3dip" />
+            <stroke android:width="1dip" android:color="#24b339" />
+            <gradient android:angle="-90"
+                android:startColor="#90ba8d"
+                android:endColor="#1f8012" />
+        </shape>
+    </item>
+</selector>

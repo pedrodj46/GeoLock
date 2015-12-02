@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- layout per la visualizzazione dei dettagli riguardanti una foto -->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView01"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#c1dcb8">
+
+<TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/image_selected"
+        android:adjustViewBounds="true"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:id="@+id/innerFrameLayout00"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/title_ImageName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:text="@string/name_section"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/my_border"/>
+
+        <TextView
+            android:id="@+id/ImageName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/my_border"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/innerFrameLayout01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/title_latitude"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:text="@string/lat_section"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/my_border"/>
+
+        <TextView
+            android:id="@+id/latitude"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/my_border"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/innerFrameLayout02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/title_longitude"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:text="@string/long_section"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/my_border"/>
+
+        <TextView
+            android:id="@+id/longitude"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/my_border"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/innerFrameLayout03"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/title_address"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:text="@string/address_section"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/my_border"/>
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/my_border"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/innerFrameLayout04"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/title_looking"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:text="@string/direzobs_section"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/my_border"/>
+
+        <TextView
+            android:id="@+id/looking"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/my_border"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/innerFrameLayout05"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/title_direction"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:text="@string/direzsub_section"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/my_border"/>
+
+        <TextView
+            android:id="@+id/direction"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/my_border"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/innerFrameLayout06"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/title_distance"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:text="@string/distance"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/my_border"/>
+
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/my_border"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/innerFrameLayout07"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp" >
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:text="@string/transfered"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/my_border" />
+
+        <TextView
+            android:id="@+id/transfered"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/my_border" />
+    </LinearLayout>
+
+</TableLayout>
+</ScrollView>
+

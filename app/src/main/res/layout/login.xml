@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- layout del menu iniziale -->
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#222222">
+
+<android.support.v4.widget.DrawerLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"></android.support.v4.widget.DrawerLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center|center_vertical"
+        android:background="#444">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inserisci le credenziali"
+            android:id="@+id/textView3"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#fff" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/loginUsername"
+            android:layout_gravity="center_horizontal"
+            android:background="#fff"
+            android:textColor="#000"
+            android:hint="Username"
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="60px"
+            android:layout_marginRight="30px"
+            android:padding="5px" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/loginPassword"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#000"
+            android:background="#fff"
+            android:layout_marginTop="60px"
+            android:hint="Password"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:padding="5px" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ricordami"
+            android:id="@+id/loginCheck"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60px"
+            android:textColor="#fff" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LOGIN"
+            android:id="@+id/loginSend"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60px" />
+    </LinearLayout>
+
+</FrameLayout>
