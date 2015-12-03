@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.michele.fragmentexample" >
+    package="com.michele.fragmentexample"
+    android:versionCode="101"
+    android:versionName="1.0.1">
 
     <!-- permessi per l'uso della camera -->
     <uses-permission android:name="android.permission.CAMERA" />
@@ -26,6 +28,16 @@
     <!-- network information access permissions (not internet usage) -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <permission android:name="com.michele.fragmentexample.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.michele.fragmentexample.permission.C2D_MESSAGE" />
+
+    <uses-permission
+        android:name="com.google.android.c2dm.permission.RECEIVE" />
+
     <application
         android:name="com.michele.appdegree.globals"
         android:allowBackup="true"
@@ -42,12 +54,25 @@
             </intent-filter>
         </activity>
 
+        <receiver
+            android:name="com.michele.appdegree.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.michele.fragmentexample" />
+            </intent-filter>
+        </receiver>
+        <service android:name="com.michele.appdegree.GcmIntentService" />
+
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCJkS9mreIM1J6jg13jzZOyvT-1LUNqsK0"/>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 

@@ -47,11 +47,6 @@ public class mainActivity extends FragmentActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // metodo antiquato per attivare il fullscreen nelle API Android inferiori alla 16
-        /*if (Build.VERSION.SDK_INT <= 22) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }*/
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -59,6 +54,11 @@ public class mainActivity extends FragmentActivity implements
         }
 
         setContentView(R.layout.main);
+
+        /* COMMENTO PER EMULATORE */
+        GcmPushNotifications registration = new GcmPushNotifications();
+        registration.registrationDevice(this);
+
 
         // TEST INVIO JSON DEBUG
         //ServerConnection sendData = new ServerConnection();
