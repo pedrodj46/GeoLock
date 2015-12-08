@@ -54,6 +54,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.michele.appdegree.afterNotification"
+            android:label="@string/app_name" >
+        </activity>
+
         <receiver
             android:name="com.michele.appdegree.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,6 +118,8 @@ public class mainGallery extends Fragment implements ListView.OnItemClickListene
         PhotoItem photoListItem = (PhotoItem)this.adapter.getItem(position);
         String imagePath = photoListItem.getFullImageUri().getPath();
         pictureSelected(imagePath);
+
+        Log.d("path immagine", imagePath);
     }
 
 
