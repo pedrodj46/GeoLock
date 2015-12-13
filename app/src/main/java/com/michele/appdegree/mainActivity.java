@@ -85,7 +85,7 @@ public class mainActivity extends FragmentActivity implements
             loginFragment firstFragment = new loginFragment();
 
             // inizializza fragment menu iniziale
-            changingFragment(firstFragment, "recallLogin", true, false);
+            changingFragment(firstFragment, "recallLogin", false, false);
         }
     }
 

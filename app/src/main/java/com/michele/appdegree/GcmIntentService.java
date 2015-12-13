@@ -58,19 +58,19 @@ public class GcmIntentService extends IntentService {
 
     private void sendNotification(JSONObject msg) {
 
-        NotificationManager mNotificationManager = (NotificationManager)
-                this.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        Intent intent = new Intent(this, afterNotification.class);
-
-        intent.putExtra("id_foto", "21");
-
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
         // mandare in un'altra activity e passare un dato
 
         try{
+            NotificationManager mNotificationManager = (NotificationManager)
+                    this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+            Intent intent = new Intent(this, afterNotification.class);
+
+            intent.putExtra("id_foto", msg.getString("idFoto"));
+
+            PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
             NotificationCompat.Builder mBuilder =
                     (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.ic_launcher)

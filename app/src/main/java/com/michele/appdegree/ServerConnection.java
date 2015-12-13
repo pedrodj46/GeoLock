@@ -224,6 +224,31 @@ public class ServerConnection {
         return id;
     }
 
+    public String getPhotoDetails(String idFoto){
+
+        try{
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://esamiuniud.altervista.org/tesi/getPhotoDetails.php");
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("idF", idFoto.toString());
+
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("jsonIdPhoto", jsonObject.toString()));
+
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            response = httpclient.execute(httppost);
+            entity = response.getEntity();
+            id = EntityUtils.toString(entity, HTTP.UTF_8);
+
+        }
+        catch (Exception e){
+            Log.d("errore", "errore "+e);
+        }
+
+        return id;
+    }
+
     public boolean isConnected(){
         ConnectivityManager connMgr = (ConnectivityManager)
                 Main.getSystemService(Activity.CONNECTIVITY_SERVICE);

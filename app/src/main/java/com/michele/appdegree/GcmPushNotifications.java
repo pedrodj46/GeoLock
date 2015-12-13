@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.provider.Settings;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -43,12 +44,14 @@ public class GcmPushNotifications extends mainActivity {
     GoogleCloudMessaging gcm;
     AtomicInteger msgId = new AtomicInteger();
     Context context;
-    String regid;
+    String regid, androidid;
     Activity Main;
 
     public void registrationDevice(Activity main) {
 
         Main = main;
+
+        androidid = Settings.Secure.getString(main.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(main);
@@ -197,6 +200,7 @@ public class GcmPushNotifications extends mainActivity {
 
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("regid", regid));
+            nameValuePairs.add(new BasicNameValuePair("androidid", androidid));
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             response = httpclient.execute(httppost);

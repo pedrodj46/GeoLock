@@ -1,6 +1,5 @@
 package com.michele.appdegree;
 
-import android.database.Cursor;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -11,6 +10,8 @@ import android.widget.TextView;
 
 import com.michele.fragmentexample.R;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 /**
  * Created by mattia on 06/12/15.
@@ -32,6 +33,8 @@ public class afterNotification extends FragmentActivity {
     Bundle extras;
     String idFoto;
 
+    JSONObject obj;
+
     String urlPath = "http://esamiuniud.altervista.org/tesi/img/";
 
 
@@ -50,7 +53,27 @@ public class afterNotification extends FragmentActivity {
         setContentView(R.layout.after_notification);
         Log.d("prova", idFoto);
 
-        findDetails();
+        String json=photoDetails();
+
+        Log.d("json:", json);
+
+        try{
+            obj = new JSONObject(json);
+
+            nameImage = obj.getString("nome")+".jpg";
+            latitude = obj.getString("lat");
+            longitude = obj.getString("lon");
+            address = obj.getString("indirizzo");
+            mlooking = obj.getString("dirUtente");
+            mdegree = obj.getString("angUtente");
+            direction = obj.getString("dirSogg");
+            directionDegree = obj.getString("angSogg");
+            distance = obj.getString("distanza");
+            transfered = 1;
+        }
+        catch (Exception e){
+            Log.d("errore",e.toString());
+        }
 
         //String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString()+"/AppDegreeTrial/";
 
@@ -59,7 +82,7 @@ public class afterNotification extends FragmentActivity {
 
         Log.d("url", urlPath+nameImage);
 
-        Picasso.with(this).load(urlPath+nameImage).into(image);
+        Picasso.with(this).load(urlPath+nameImage).placeholder(R.drawable.picasso_loading).into(image);
 
         TextView mNameImage = (TextView)findViewById(R.id.ImageName);
         TextView mLatitude = (TextView)findViewById(R.id.latitude);
@@ -122,8 +145,16 @@ public class afterNotification extends FragmentActivity {
 
     }
 
-    // void che interagisce con il database
-    public void findDetails() {
+    // void che interagisce con il server
+    public String photoDetails() {
+
+        ServerConnection getPhotoDetails = new ServerConnection();
+        String json=getPhotoDetails.getPhotoDetails(idFoto);
+
+        return json;
+
+        /*
+
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         // il cursore fornito dal class del database mi permette di selezionare gli elementi
         Cursor c = databaseHelper.getImageInfo();
@@ -153,7 +184,7 @@ public class afterNotification extends FragmentActivity {
         finally {
             // infine chiudo il database (che l'estrazione sia riuscita o meno
             c.close();
-        }
+        }*/
     }
 
 
