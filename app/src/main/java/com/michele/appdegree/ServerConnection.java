@@ -6,9 +6,12 @@ import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
+import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.jaredrummler.android.device.DeviceName;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -196,8 +199,6 @@ public class ServerConnection {
     public String sendLogin(String username, String password, Activity main){
 
         try{
-            //bytes = password.getBytes("UTF-8");
-            //base64Password = Base64.encodeToString(bytes, Base64.DEFAULT);
 
             httpclient = new DefaultHttpClient();
             httppost = new HttpPost("http://esamiuniud.altervista.org/tesi/sendLogin.php");
@@ -207,6 +208,8 @@ public class ServerConnection {
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("username", username.toString());
             jsonObject.accumulate("password", password.toString());
+            jsonObject.accumulate("device", DeviceName.getDeviceName());
+            jsonObject.accumulate("androidid", Settings.Secure.getString(main.getContentResolver(), Settings.Secure.ANDROID_ID));
 
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("jsonLogin", jsonObject.toString()));

@@ -3,6 +3,7 @@ package com.michele.appdegree;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,8 +14,10 @@ import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.michele.fragmentexample.R;
@@ -44,6 +47,8 @@ public class mainActivity extends FragmentActivity implements
     static Integer result=0;
     static String stringDialog="";
 
+    public static final String MY_PREFS_NAME = "ricordamiLogin";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,14 +60,9 @@ public class mainActivity extends FragmentActivity implements
 
         setContentView(R.layout.main);
 
-        /* COMMENTO PER EMULATORE */
+        // registra il regid
         GcmPushNotifications registration = new GcmPushNotifications();
         registration.registrationDevice(this);
-
-
-        // TEST INVIO JSON DEBUG
-        //ServerConnection sendData = new ServerConnection();
-        //sendData.sendData(this);
 
         // valuta se riempire il fragment container con il primo fragment o se questo e' gia' in uso
         if (findViewById(R.id.fragment_container) != null) {
@@ -71,21 +71,55 @@ public class mainActivity extends FragmentActivity implements
                 return;
             }
 
-            // PRIMO FRAGMENT VECCHIO
-            /*
-            // crea il primo fragment
-            buttonsFragment firstFragment = new buttonsFragment();
+            // ricordami Login
+            SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+            if(prefs.getString("username", "0")!="0" && prefs.getString("password", "0")!="0") {
+                String username = new String(Base64.decode(prefs.getString("username", "0"), Base64.DEFAULT));
+                String password = new String(Base64.decode(prefs.getString("password", "0"), Base64.DEFAULT));
 
-            // inizializza fragment menu iniziale
-            changingFragment(firstFragment, "recallButtons", true, false);
+                Log.d("username", username);
+                Log.d("password", password);
 
-            */
+                String idU;
 
-            // crea il primo fragment
-            loginFragment firstFragment = new loginFragment();
+                ServerConnection sendLogin = new ServerConnection();
+                idU = sendLogin.sendLogin(username, password, this);
 
-            // inizializza fragment menu iniziale
-            changingFragment(firstFragment, "recallLogin", false, false);
+                Log.d("idutente", idU.toString());
+
+                if (idU.equals("0")) {
+                    // crea il primo fragment
+                    loginFragment firstFragment = new loginFragment();
+
+                    // inizializza fragment menu iniziale
+                    changingFragment(firstFragment, "recallLogin", false, false);
+
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                    dialog.setMessage(stringDialog).setTitle("Errore!");
+                    dialog.setMessage(stringDialog).setMessage("Inserire username e password corretti!");
+                    dialog.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    AlertDialog alertDialog = dialog.create();
+                    alertDialog.show();
+                } else {
+                    globals idUtente = (globals) getApplicationContext();
+                    idUtente.setId(idU);
+
+                    buttonsFragment btnFragment = new buttonsFragment();
+                    changingFragment(btnFragment, "recallButton", true, false);
+                }
+            }
+            else {
+                // crea il primo fragment
+                loginFragment firstFragment = new loginFragment();
+
+                // inizializza fragment menu iniziale
+                changingFragment(firstFragment, "recallLogin", false, false);
+            }
         }
     }
 
@@ -94,6 +128,7 @@ public class mainActivity extends FragmentActivity implements
 
         EditText username = (EditText)findViewById(R.id.loginUsername);
         EditText password = (EditText)findViewById(R.id.loginPassword);
+        CheckBox ricordami = (CheckBox)findViewById(R.id.loginCheckbox);
         String usernameText = username.getText().toString();
         String passwordText = password.getText().toString();
 
@@ -123,6 +158,19 @@ public class mainActivity extends FragmentActivity implements
         else{
             globals idUtente = (globals) getApplicationContext();
             idUtente.setId(idU);
+
+            if(ricordami.isChecked()){
+                SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                editor.putString("username", Base64.encodeToString(usernameText.getBytes(), Base64.DEFAULT));
+                editor.putString("password", Base64.encodeToString(passwordText.getBytes(), Base64.DEFAULT));
+                editor.commit();
+            }
+            else{
+                SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                editor.remove("username");
+                editor.remove("password");
+                editor.commit();
+            }
 
             buttonsFragment newFragment = new buttonsFragment();
             changingFragment(newFragment, "recallButton", true, true);
