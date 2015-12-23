@@ -3,6 +3,7 @@ package com.michele.appdegree;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -58,8 +59,6 @@ public class GcmIntentService extends IntentService {
 
     private void sendNotification(JSONObject msg) {
 
-        // mandare in un'altra activity e passare un dato
-
         try{
             NotificationManager mNotificationManager = (NotificationManager)
                     this.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -67,9 +66,16 @@ public class GcmIntentService extends IntentService {
             Intent intent = new Intent(this, afterNotification.class);
 
             intent.putExtra("id_foto", msg.getString("idFoto"));
+            intent.putExtra("id_notifica", msg.getString("idNotifica"));
+            intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
-            PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            //PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+            //        intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            PendingIntent contentIntent = TaskStackBuilder.create(this)
+                    .addParentStack(afterNotification.class)
+                    .addNextIntent(intent)
+                    .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
             NotificationCompat.Builder mBuilder =
                     (NotificationCompat.Builder) new NotificationCompat.Builder(this)

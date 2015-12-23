@@ -289,7 +289,7 @@ public class ImageDeTails extends Fragment implements OnMapReadyCallback {
                 // forza il back button fino al fragment del menu iniziale
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 int count = fm.getBackStackEntryCount();
-                while (count > 2) {
+                while (count > 1) {
                     fm.popBackStackImmediate();
                     count--;
                 }
@@ -304,7 +304,7 @@ public class ImageDeTails extends Fragment implements OnMapReadyCallback {
                         // forza il back button fino al fragment della camera
                         FragmentManager fm = getActivity().getSupportFragmentManager();
                         int count = fm.getBackStackEntryCount();
-                        while (count > 3) {
+                        while (count > 2) {
                             fm.popBackStackImmediate();
                             count--;
                         }

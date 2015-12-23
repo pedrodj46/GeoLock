@@ -57,6 +57,7 @@ public class ServerConnection {
     Integer Distanza;
     Boolean Send;
     Long idFoto;
+    String idUt;
 
     public boolean sendData(Long midFoto, String mImageName, String mLatitude, String mLongitude, String mAddress,
                          String mDirezioneDispCard, Float mDirezioneDispDegree,
@@ -78,6 +79,9 @@ public class ServerConnection {
         DirezioneSoggDegree = mDirezioneSoggDegree;
         Distanza = mDistanza;
         Boolean Ok=false;
+
+        globals idUtente = (globals) main.getApplicationContext();
+        idUt = idUtente.getId();
 
         if(isConnected()) {
             Toast.makeText(Main, "Connesso con il server!", Toast.LENGTH_SHORT).show();
@@ -159,14 +163,15 @@ public class ServerConnection {
             String json = "";
 
             JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("idUtente", idUt);
             jsonObject.accumulate("idFoto", idFoto.toString());
-            jsonObject.accumulate("name", ImageName.toString());
-            jsonObject.accumulate("latitude", Latitude.toString());
-            jsonObject.accumulate("longitude", Longitude.toString());
-            jsonObject.accumulate("address", Address.toString());
-            jsonObject.accumulate("direzioneUtente", DirezioneDispCard.toString());
+            jsonObject.accumulate("name", ImageName);
+            jsonObject.accumulate("latitude", Latitude);
+            jsonObject.accumulate("longitude", Longitude);
+            jsonObject.accumulate("address", Address);
+            jsonObject.accumulate("direzioneUtente", DirezioneDispCard);
             jsonObject.accumulate("gradiUtente", DirezioneDispDegree.toString());
-            jsonObject.accumulate("direzioneSoggetto", DirezioneSoggCard.toString());
+            jsonObject.accumulate("direzioneSoggetto", DirezioneSoggCard);
             jsonObject.accumulate("gradiSoggetto", DirezioneSoggDegree.toString());
             jsonObject.accumulate("distanza", Distanza.toString());
 
@@ -250,6 +255,68 @@ public class ServerConnection {
         }
 
         return id;
+    }
+
+    public void updateLocation(double lat, double lon, float acc, float speed, Activity main){
+        try{
+
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://esamiuniud.altervista.org/tesi/sendPosition.php");
+
+            String json = "";
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("lat", lat);
+            jsonObject.accumulate("lon", lon);
+            jsonObject.accumulate("acc", acc);
+            jsonObject.accumulate("speed", speed);
+            jsonObject.accumulate("androidid", Settings.Secure.getString(main.getContentResolver(), Settings.Secure.ANDROID_ID));
+
+            globals idUtente = (globals) main.getApplicationContext();
+            String idU = idUtente.getId();
+
+            jsonObject.accumulate("id_utente", idU);
+
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("jsonPosition", jsonObject.toString()));
+
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            response = httpclient.execute(httppost);
+            //entity = response.getEntity();
+            //id = EntityUtils.toString(entity, HTTP.UTF_8);
+
+        }
+        catch (Exception e){
+            Log.d("errore", "errore "+e);
+        }
+    }
+
+    public void updateNotification(String idN){
+        try{
+
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://esamiuniud.altervista.org/tesi/updateNotification.php");
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("idN", idN);
+            jsonObject.accumulate("letta", 1);
+
+            Log.d("id notifica",idN);
+
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("jsonPosition", jsonObject.toString()));
+
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            response = httpclient.execute(httppost);
+            entity = response.getEntity();
+            id = EntityUtils.toString(entity, HTTP.UTF_8);
+
+            Log.d("errore",id);
+
+        }
+        catch (Exception e){
+            Log.d("errore", "errore "+e);
+        }
     }
 
     public boolean isConnected(){

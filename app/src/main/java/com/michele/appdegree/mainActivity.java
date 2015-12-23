@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
@@ -60,7 +61,9 @@ public class mainActivity extends FragmentActivity implements
 
         setContentView(R.layout.main);
 
-        // registra il regid
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // registra il tokenid
         GcmPushNotifications registration = new GcmPushNotifications();
         registration.registrationDevice(this);
 
@@ -111,6 +114,10 @@ public class mainActivity extends FragmentActivity implements
 
                     buttonsFragment btnFragment = new buttonsFragment();
                     changingFragment(btnFragment, "recallButton", true, false);
+
+                    // abilita il servizio di localizzazione automatico
+                    LocationUpdate start = new LocationUpdate();
+                    start.startServiceLocation(this);
                 }
             }
             else {
@@ -172,8 +179,17 @@ public class mainActivity extends FragmentActivity implements
                 editor.commit();
             }
 
+            Log.d("entra", "si");
+
+            FragmentManager myFragment = getSupportFragmentManager();
+            myFragment.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
             buttonsFragment newFragment = new buttonsFragment();
             changingFragment(newFragment, "recallButton", true, true);
+
+            // abilita il servizio di localizzazione automatico
+            LocationUpdate start = new LocationUpdate();
+            start.startServiceLocation(this);
         }
     }
 
@@ -524,10 +540,37 @@ public class mainActivity extends FragmentActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // gestisce il menu - inutilizzato
-        getMenuInflater().inflate(R.menu.menu_fragment_example,
-                menu);
-        return true;
+        // gestisce il menu
+        menu.add(Menu.NONE, R.id.menu_action1, Menu.NONE, R.string.menu_action1);
+        menu.add(Menu.NONE, R.id.menu_action2, Menu.NONE, R.string.menu_action2);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_action1:
+                Log.d("btn","hai cliccato il btn 1");
+                return true;
+            case R.id.menu_action2:
+                Log.d("btn","hai cliccato il btn 2");
+
+                SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                editor.remove("username");
+                editor.remove("password");
+                editor.commit();
+
+                FragmentManager myFragment = getSupportFragmentManager();
+                myFragment.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+                loginFragment firstFragment = new loginFragment();
+                changingFragment(firstFragment, "recallLogin", false, false);
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

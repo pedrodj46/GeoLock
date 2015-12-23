@@ -32,6 +32,7 @@ public class afterNotification extends FragmentActivity {
 
     Bundle extras;
     String idFoto;
+    String idNotifica;
 
     JSONObject obj;
 
@@ -49,9 +50,9 @@ public class afterNotification extends FragmentActivity {
 
         extras = getIntent().getExtras();
         idFoto = extras.getString("id_foto");
+        idNotifica = extras.getString("id_notifica");
 
         setContentView(R.layout.after_notification);
-        Log.d("prova", idFoto);
 
         String json=photoDetails();
 
@@ -148,44 +149,12 @@ public class afterNotification extends FragmentActivity {
     // void che interagisce con il server
     public String photoDetails() {
 
+        ServerConnection updateNotification = new ServerConnection();
+        updateNotification.updateNotification(idNotifica);
+
         ServerConnection getPhotoDetails = new ServerConnection();
         String json=getPhotoDetails.getPhotoDetails(idFoto);
 
         return json;
-
-        /*
-
-        DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        // il cursore fornito dal class del database mi permette di selezionare gli elementi
-        Cursor c = databaseHelper.getImageInfo();
-
-        try {
-            // loop tra tutti gli elementi del database
-            for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-                String idF=c.getString(0);
-                if(idF.equals(idFoto)) {
-                    // selezionata la riga giusta recupero latitudine e longitudine
-                    nameImage = c.getString(1)+".jpg";
-                    latitude = c.getString(4);
-                    longitude = c.getString(5);
-                    address = c.getString(6);
-                    mlooking = c.getString(7);
-                    mdegree = c.getString(8);
-                    direction = c.getString(9);
-                    directionDegree = c.getString(10);
-                    distance = c.getString(11);
-                    transfered = c.getInt(12);
-
-                    Log.d("nomeImmagine", nameImage);
-                }
-
-            }
-        }
-        finally {
-            // infine chiudo il database (che l'estrazione sia riuscita o meno
-            c.close();
-        }*/
     }
-
-
 }
