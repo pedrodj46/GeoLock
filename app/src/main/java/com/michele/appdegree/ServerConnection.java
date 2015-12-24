@@ -304,7 +304,7 @@ public class ServerConnection {
             Log.d("id notifica",idN);
 
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-            nameValuePairs.add(new BasicNameValuePair("jsonPosition", jsonObject.toString()));
+            nameValuePairs.add(new BasicNameValuePair("jsonNotification", jsonObject.toString()));
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             response = httpclient.execute(httppost);
