@@ -45,6 +45,83 @@ public class mainGallery extends Fragment implements ListView.OnItemClickListene
         public void onPictureSelected(String imagePath);
     }
 
+    /*public static JSONObject getJSONfromURL(String url){
+        //initialize
+        InputStream is = null;
+        String result = "";
+        JSONObject jArray = null;
+        //http post
+        try{
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(url);
+            HttpResponse response = httpclient.execute(httppost);
+            HttpEntity entity = response.getEntity();
+            is = entity.getContent();
+        }
+        catch(Exception e){
+            Log.e("log_tag", "Error in http connection "+e.toString());
+        }
+        //convert response to string
+        try{
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            is.close();
+            result=sb.toString();
+        }
+        catch(Exception e){
+            Log.e("log_tag", "Error converting result "+e.toString());
+        }
+        //try parse the string to a JSON object
+        try{
+            jArray = new JSONObject(result);
+        }
+        catch(JSONException e){
+            Log.e("log_tag", "Error parsing data "+e.toString());
+        }
+        return jArray;
+    }
+
+    ArrayList<HashMap<String, String>> mylist = new ArrayList<HashMap<String, String>>();
+    //Get the data (see above)
+    JSONObject json =JSONfunctions.getJSONfromURL(
+            "http://api.geonames.org/postalCodeSearchJSON?formatted=true&postalcode=9791&maxRows=10&username=demo&style=full");
+    try{
+        //Get the element that holds the earthquakes
+        ( JSONArray )JSONArray earthquakes = json.getJSONArray("earthquakes");
+        //Loop the Array
+        for(int i=0;i < earthquakes.length();i++){
+            HashMap<String, String> map = new HashMap<String, String>();
+            JSONObject e = earthquakes.getJSONObject(i);
+            map.put("id",  String.valueOf(i));
+            map.put("name", "Earthquake name:" + e.getString("eqid"));
+            map.put("magnitude", "Magnitude: " +  e.getString("magnitude"));
+            mylist.add(map);
+        }
+    }
+    catch(JSONException e){
+        Log.e("log_tag", "Error parsing data "+e.toString());
+    }
+
+    ListAdapter adapter = new SimpleAdapter(this, mylist , R.layout.main,
+            new String[] { "name", "magnitude" },
+            new int[] { R.id.item_title, R.id.item_subtitle });
+    setListAdapter(adapter);
+    final ListView lv = getListView();
+    lv.setTextFilterEnabled(true);
+    lv.setOnItemClickListener(new OnItemClickListener() {
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            @SuppressWarnings("unchecked")
+                    Toast.makeText(Main.this, "ID '" + o.get("id") + "' was clicked.", Toast.LENGTH_SHORT).show();
+        }
+    });*/
+
+
+
+
     @Override
     public void onAttach(Activity activity){
         super.onAttach(activity);

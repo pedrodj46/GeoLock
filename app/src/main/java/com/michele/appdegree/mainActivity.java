@@ -95,7 +95,7 @@ public class mainActivity extends FragmentActivity implements
                     loginFragment firstFragment = new loginFragment();
 
                     // inizializza fragment menu iniziale
-                    changingFragment(firstFragment, "recallLogin", false, false);
+                    changingFragment(firstFragment, "recallLogin", false, true);
 
                     AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                     dialog.setMessage(stringDialog).setTitle("Errore!");
@@ -125,7 +125,7 @@ public class mainActivity extends FragmentActivity implements
                 loginFragment firstFragment = new loginFragment();
 
                 // inizializza fragment menu iniziale
-                changingFragment(firstFragment, "recallLogin", false, false);
+                changingFragment(firstFragment, "recallLogin", false, true);
             }
         }
     }
@@ -185,7 +185,7 @@ public class mainActivity extends FragmentActivity implements
             myFragment.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
             buttonsFragment newFragment = new buttonsFragment();
-            changingFragment(newFragment, "recallButton", true, true);
+            changingFragment(newFragment, "recallButton", true, false);
 
             // abilita il servizio di localizzazione automatico
             LocationUpdate start = new LocationUpdate();
@@ -198,21 +198,21 @@ public class mainActivity extends FragmentActivity implements
     public void onButtonClick() {
         CameraFragment newFragment = new CameraFragment();
 
-        changingFragment(newFragment, "recallCamera", true, true);
+        changingFragment(newFragment, "recallCamera", true, false);
     }
 
     // inizializza galleria immagini
     public void onButtonClick02() {
         mainGallery newFragment = new mainGallery();
 
-        changingFragment(newFragment, "recallGallery", true, true);
+        changingFragment(newFragment, "recallGallery", true, false);
     }
 
     // inizializza la mappa di google
     public void onButtonClick04() {
         mapFragment newFragment = new mapFragment();
 
-        changingFragment(newFragment, "recallGoogleMaps", true, true);
+        changingFragment(newFragment, "recallGoogleMaps", true, false);
     }
 
     // inizializza la calibrazione della bussola
@@ -261,9 +261,9 @@ public class mainActivity extends FragmentActivity implements
 
     // inizializza la mappa di google
     public void onButtonClick07() {
-        loginFragment newFragment = new loginFragment();
+        mainNotification newFragment = new mainNotification();
 
-        changingFragment(newFragment, "recallLogin", true, true);
+        changingFragment(newFragment, "recallNotification", true, false);
     }
 
     public int updateOtherPhoto(){
@@ -531,6 +531,8 @@ public class mainActivity extends FragmentActivity implements
             ImageCaptured imageCaptured = new ImageCaptured();
             imageCaptured.recycle();
             mainActivity.super.onBackPressed();
+        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0){
+            getSupportFragmentManager().popBackStack();
         } else {
             mainActivity.super.onBackPressed();
         }
@@ -565,7 +567,7 @@ public class mainActivity extends FragmentActivity implements
                 myFragment.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
                 loginFragment firstFragment = new loginFragment();
-                changingFragment(firstFragment, "recallLogin", false, false);
+                changingFragment(firstFragment, "recallLogin", false, true);
 
                 return true;
             default:
