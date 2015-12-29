@@ -10,7 +10,7 @@
     <string name="button03">POSIZIONI</string>
     <string name="button04">CALIBRAZIONE</string>
     <string name="button05">INVIA FOTO</string>
-    <string name="button06">PROVA FRAGMENT</string>
+    <string name="button06">LISTA NOTIFICHE</string>
 
     <!-- GPS CHECK STRINGS -->
     <string name="gps_network_not_enabled">GPS DISATTIVATO</string>

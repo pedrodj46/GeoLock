@@ -1,5 +1,6 @@
 package com.michele.appdegree;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,9 +12,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
+import com.michele.appdegree.adapters.JsonAdapter;
 import com.michele.fragmentexample.R;
 
 import org.apache.http.HttpEntity;
@@ -43,6 +43,26 @@ public class mainNotification extends Fragment {
 
     ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 
+    // segue l'interfaccia per lo scambio dei dati con la mainActivity
+    ToolbarListener activityCallback;
+
+    public interface ToolbarListener {
+        public void onNotificationSelected(String idN);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            activityCallback = (ToolbarListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement ToolbarListener");
+        }
+    }
+    // fine interfaccia di collegamento con la main activity
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +80,8 @@ public class mainNotification extends Fragment {
         rowView = inflater.inflate(R.layout.main_notification, container, false);
 
         list_notifications = (ListView) rowView.findViewById(R.id.lista01);
+
+        list.clear();
 
         new GetData().execute();
 
@@ -131,24 +153,38 @@ public class mainNotification extends Fragment {
                     for(int i=0;i<result.length();i++){
                         JSONObject c = result.getJSONObject(i);
                         String nome = c.getString("nome");
+                        String nomeUtente = c.getString("nomeUtente");
+                        String dataInvio = c.getString("dataInvio");
+                        String letta = c.getString("letta");
+                        String idN = c.getString("idN");
+                        String aperta = c.getString("aperta");
+
+                        //nomeUtente = "Inviata da: "+nomeUtente+", "+dataInvio;
+                        nomeUtente = nomeUtente+", "+dataInvio;
 
                         HashMap<String, String> map = new HashMap<String, String>();
 
                         map.put("nome", nome);
+                        map.put("nomeUtente", nomeUtente);
+                        map.put("letta", letta);
+                        map.put("idN", idN);
+                        map.put("aperta", aperta);
+                        map.put("fragment", "notification");
 
                         list.add(map);
 
-                        ListAdapter adapter = new SimpleAdapter(getActivity(), list,
-                                R.layout.mylist,
-                                new String[] { "nome" }, new int[] {
-                                R.id.item});
+                        ListAdapter adapter = new JsonAdapter(getActivity(), list,
+                                R.layout.mylist_notification,
+                                new String[] { "nome", "nomeUtente" }, new int[] {
+                                R.id.item, R.id.testo1});
 
                         list_notifications.setAdapter(adapter);
                         list_notifications.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view,
                                                     int position, long id) {
-                                Toast.makeText(getActivity(), "You Clicked at " + list.get(+position).get("nome"), Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getActivity(), "You Clicked at " + list.get(+position).get("nome"), Toast.LENGTH_SHORT).show();
+                                activityCallback.onNotificationSelected(list.get(+position).get("idN"));
                             }
                         });
                     }
@@ -161,5 +197,10 @@ public class mainNotification extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+    }
 
 }

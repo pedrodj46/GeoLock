@@ -28,7 +28,7 @@ import java.io.File;
 public class mainActivity extends FragmentActivity implements
         buttonsFragment.ToolbarListener, CameraFragment.ToolbarListener,
         ImageCaptured.ToolbarListener, ImageDeTails.ToolbarListener, mainGallery.ToolbarListener,
-        loginFragment.ToolbarListener{
+        loginFragment.ToolbarListener, mainNotification.ToolbarListener{
 
     // Activity principale che gestisce l'interazione tra tutti di Fragment dell'applicazione e
     // conserva i dati raccolti per il loro inserimento all'interno del database
@@ -412,12 +412,28 @@ public class mainActivity extends FragmentActivity implements
 
     // inizializza l'apertura dei dettagli riguardanti una foto quando viene cliccata sul listener
     // del fragment gallery
-    public void onPictureSelected(String imagePath) {
+    /*public void onPictureSelected(String imagePath) {
         galleryPhotoDeTails newFragment = new galleryPhotoDeTails();
         // invio il percorso dell'immagine da visualizzare nel nuovo fragment
         newFragment.displayImage(imagePath);
 
         changingFragment(newFragment, "galleryImageDeTails", true, false);
+    }*/
+
+    public void onPhotoSelected(String idF){
+        photoDetails newFragment = new photoDetails();
+        // invio l'id della notifica da visualizzare nel nuovo fragment
+        newFragment.photoID(idF);
+
+        changingFragment(newFragment, "photoDetails", true, false);
+    }
+
+    public void onNotificationSelected(String idN){
+        notificationDetails newFragment = new notificationDetails();
+        // invio l'id della notifica da visualizzare nel nuovo fragment
+        newFragment.notificationID(idN);
+
+        changingFragment(newFragment, "notificationDetails", true, false);
     }
 
 
