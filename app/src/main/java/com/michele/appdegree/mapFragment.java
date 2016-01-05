@@ -1,16 +1,12 @@
 package com.michele.appdegree;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
-import android.media.ThumbnailUtils;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,8 +27,19 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.michele.fragmentexample.R;
+import com.squareup.picasso.Picasso;
 
-import java.io.File;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -47,6 +54,8 @@ public class mapFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap googleMap;
     private static View view;
 
+    String url="http://esamiuniud.altervista.org/tesi/getPositions.php?idU=";
+
     // incognite necessarie a generare una custom infoview
     private HashMap<Marker, MyMarker> mMarkersHashMap;
     private ArrayList<MyMarker> mMyMarkersArray = new ArrayList<MyMarker>();
@@ -56,6 +65,18 @@ public class mapFragment extends Fragment implements OnMapReadyCallback {
     // contenitore della posizione trovata
     static android.location.Location mPosition;
     static Boolean positionChanged;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        globals idUtente = (globals) getActivity().getApplicationContext();
+        String idU = idUtente.getId();
+
+        url=url+idU;
+
+        Log.d("indirizzo", url);
+    }
 
 
     @Override
@@ -135,19 +156,26 @@ public class mapFragment extends Fragment implements OnMapReadyCallback {
             public void onInfoWindowClick(Marker marker) {
                 // cliccata la info window controlla l'immagine a cui e' legato
                 for (int i = 0; i < mMyMarkersArray.size(); i++) {
+
                     if (marker.getTitle().equals(mMyMarkersArray.get(i).getmIcon())) {
                         // recuperate le informazioni riguardanti l'immagine a cui e' legato
                         // carica i dettagli rigurdanti la foto direttamente dalla gallery
-                        galleryPhotoDeTails newFragment = new galleryPhotoDeTails();
+                        photoDetails newFragment = new photoDetails();
                         // invio il percorso dell'immagine da visualizzare nel nuovo fragment
-                        newFragment.displayImage(marker.getTitle());
+                        newFragment.photoID(mMyMarkersArray.get(i).getmidF());
 
                         FragmentTransaction transaction =
                                 getActivity().getSupportFragmentManager().beginTransaction();
+                        transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
+                                R.anim.slide_in_left, R.anim.slide_out_right);
                         transaction.replace(R.id.fragment_container, newFragment,
-                                "galleryImageDeTails2");
-                        transaction.addToBackStack("galleryImageDeTails2");
+                                "photoDetails2");
+                        transaction.addToBackStack("photoDetails2");
                         transaction.commit();
+                    }
+                    else{
+                        Log.d("maker title", marker.getTitle());
+                        Log.d("maker icon", mMyMarkersArray.get(i).getmIcon());
                     }
                 }
             }
@@ -157,7 +185,10 @@ public class mapFragment extends Fragment implements OnMapReadyCallback {
 
     // void che serve a recuperare le varie immagini e le loro informazioni
     public void findDetails(Context context) {
-        DatabaseHelper databaseHelper = new DatabaseHelper(context);
+
+        GetData();
+
+        /*DatabaseHelper databaseHelper = new DatabaseHelper(context);
         // il cursore fornito dal class del database mi permette di selezionare gli elementi
         Cursor c = databaseHelper.getImageInfo();
 
@@ -210,12 +241,85 @@ public class mapFragment extends Fragment implements OnMapReadyCallback {
         finally {
             // infine chiudo il database (che l'estrazione sia riuscita o meno
             c.close();
+        }*/
+
+    }
+
+    public void GetData() {
+
+        //initialize
+        InputStream is = null;
+        String result = "";
+        JSONArray jArray = null;
+        //http post
+        try{
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(url);
+            HttpResponse response = httpclient.execute(httppost);
+            HttpEntity entity = response.getEntity();
+            is = entity.getContent();
+        }
+        catch(Exception e){
+            Log.e("log_tag", "Error in http connection " + e.toString());
+        }
+        //convert response to string
+        try{
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            is.close();
+            result=sb.toString();
+        }
+        catch(Exception e){
+            Log.e("log_tag", "Error converting result "+e.toString());
+        }
+        //try parse the string to a JSON object
+        try{
+            jArray = new JSONArray(result);
+            Log.d("json arrivo",jArray.toString());
+        }
+        catch(Exception e){
+            Log.e("log_tag", "Error parsing data "+e.toString());
         }
 
+        try{
+            for(int i=0;i<jArray.length();i++){
+                JSONObject c = jArray.getJSONObject(i);
+                String nomeImm = c.getString("nome");
+                Double latitude = c.getDouble("lat");
+                Double longitude = c.getDouble("lon");
+                Float angleDirectObserver = Float.parseFloat(c.getString("ang"));
+                Integer distanceObject = Integer.parseInt(c.getString("dis"));
+                String idF = c.getString("idF");
+
+                Double latitude2 = findLatitude2(latitude, angleDirectObserver,
+                        distanceObject);
+                Double longitude2 = findLongitude2(latitude, longitude, angleDirectObserver,
+                        distanceObject);
+
+                // salvo il marker appena creato dentro il mio array
+                mMarkersHashMap = new HashMap<Marker, MyMarker>();
+                mMyMarkersArray.add(new MyMarker(nomeImm,
+                        "http://esamiuniud.altervista.org/tesi/img/" + nomeImm + ".jpg",
+                        latitude, longitude, angleDirectObserver, distanceObject, latitude2,
+                        longitude2,idF));
+            }
+            Log.d("array", mMyMarkersArray.toString());
+        }
+        catch (Exception e){
+            Log.d("errore", e.toString());
+        }
     }
 
     // aggiunge sulla mappa i custom markers
     private void plotMarkers(ArrayList<MyMarker> markers) {
+
+        Log.d("entra", markers.toString());
+
+
         if(markers.size() > 0) {
 
             // genera le linee di collegamento tra i vari markers della stessa immagine
@@ -369,19 +473,16 @@ public class mapFragment extends Fragment implements OnMapReadyCallback {
             ImageView markerIcon = (ImageView) v.findViewById(R.id.marker_icon);
             TextView markerLabel = (TextView)v.findViewById(R.id.marker_label);
 
-
-            // genero il thumbnail bitmap da visualizzare nell'infoview
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            Bitmap bitmap = BitmapFactory.decodeFile(myMarker.getmIcon(), options);
-
-            int THUMBSIZE = 100;
-            Bitmap ThumbImage = ThumbnailUtils.extractThumbnail(bitmap, THUMBSIZE, THUMBSIZE);
-
-
-            // setto l'immagine e il testo (il nome dell'immagine recuperato da MyMarker
-            markerIcon.setImageBitmap(ThumbImage);
+            // titolo immagine
             markerLabel.setText(myMarker.getmLabel());
+
+            String urlImage = myMarker.getmIcon();
+
+            Log.d("url immagine", urlImage);
+
+            // picasso
+            Picasso.with(v.getContext()).load(urlImage)
+                    .resize(200, 200).centerInside().into(markerIcon);
 
             return v;
         }

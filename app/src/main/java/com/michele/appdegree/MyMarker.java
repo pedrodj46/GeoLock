@@ -14,9 +14,10 @@ public class MyMarker {
     private Integer mDistance1;
     private Double mLatitude2;
     private Double mLongitude2;
+    private String midF;
 
     public MyMarker(String label, String icon, Double latitude, Double longitude, Float degree1,
-                    Integer distance1, Double latitude2, Double longitude2)
+                    Integer distance1, Double latitude2, Double longitude2, String midF)
     {
         this.mLabel = label;
         this.mLatitude = latitude;
@@ -26,6 +27,7 @@ public class MyMarker {
         this.mDistance1 = distance1;
         this.mLatitude2 = latitude2;
         this.mLongitude2 = longitude2;
+        this.midF = midF;
     }
 
     public String getmLabel()
@@ -106,5 +108,15 @@ public class MyMarker {
     public void setmLongitude2(Double mLongitude2)
     {
         this.mLongitude2 = mLongitude2;
+    }
+
+    public String getmidF()
+    {
+        return midF;
+    }
+
+    public void setmidF(String midF)
+    {
+        this.midF = midF;
     }
 }
