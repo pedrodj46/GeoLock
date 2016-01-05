@@ -30,6 +30,7 @@ public class MyMarker {
         this.midF = midF;
     }
 
+
     public String getmLabel()
     {
         return mLabel;

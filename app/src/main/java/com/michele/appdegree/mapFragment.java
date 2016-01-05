@@ -485,6 +485,7 @@ public class mapFragment extends Fragment implements OnMapReadyCallback {
                     .resize(200, 200).centerInside().into(markerIcon);
 
             return v;
+            
         }
     }
 
