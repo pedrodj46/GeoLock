@@ -43,7 +43,7 @@
     <!-- FOTO SALVATA -->
     <string name="photo_saved">FOTO SALVATA</string>
     <string name="annulla">NUOVA FOTO</string>
-    <string name="accetta">MENU</string>
+    <string name="accetta">TORNA ALLA HOME</string>
 
     <!-- Drop-Down Menu -->
     <string name="direction_prompt">Choose a direction</string>

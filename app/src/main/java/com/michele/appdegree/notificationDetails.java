@@ -39,6 +39,7 @@ public class notificationDetails extends Fragment {
 
     public interface ToolbarListener {
         public void onNotificationCloseSelected(String idN);
+        public void onNotificationContinueSelected(String idN);
     }
 
     @Override
@@ -155,6 +156,11 @@ public class notificationDetails extends Fragment {
                 btn1.setVisibility(View.VISIBLE);
                 Button btn2 = (Button) baseView.findViewById(R.id.btnContinua);
                 btn2.setVisibility(View.VISIBLE);
+                btn2.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        btn2Clicked();
+                    }
+                });
                 Button btn3 = (Button) baseView.findViewById(R.id.btnChiudi);
                 btn3.setVisibility(View.VISIBLE);
                 btn3.setOnClickListener(new View.OnClickListener() {
@@ -170,6 +176,11 @@ public class notificationDetails extends Fragment {
 
     public void notificationID(String idNotification){
         idN = idNotification;
+
+    }
+
+    public void btn2Clicked() {
+        activityCallback.onNotificationContinueSelected(idN);
     }
 
     public void btn3Clicked() {

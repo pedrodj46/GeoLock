@@ -120,7 +120,7 @@ public class CameraFragment extends Fragment implements SensorEventListener {
             activityCallback = (ToolbarListener) activity;
             // mostra una finestra di caricamento
             mLoadingProgressDialog = new ProgressDialog(getActivity());
-            mLoadingProgressDialog.setMessage("Loading Photo...");
+            mLoadingProgressDialog.setMessage("Salvataggio foto...");
             mLoadingProgressDialog.setCancelable(true);
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()

@@ -75,6 +75,10 @@ public class mainActivity extends FragmentActivity implements
                 return;
             }
 
+            // setto a 0 l'id notifica
+            globals idNotifica = (globals) getApplicationContext();
+            idNotifica.setIdNotifica("0");
+
             // ricordami Login
             SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
             if(prefs.getString("username", "0")!="0" && prefs.getString("password", "0")!="0") {
@@ -336,7 +340,7 @@ public class mainActivity extends FragmentActivity implements
     }
 
     // conferma il salvataggio della foto al fragment camera
-    public void onSendName(String name, Float direzioneDispDegree, String direzioneDispCard,
+    public Boolean onSendName(String name, Float direzioneDispDegree, String direzioneDispCard,
                            Float direzioneSoggDegree, String direzioneSoggCard, Integer distanza) {
         nameImage = null;
         nameImage = name;
@@ -357,6 +361,18 @@ public class mainActivity extends FragmentActivity implements
         // creato il file e scelto il nome adesso aggiorno il database
         upDateDatabase();
 
+        Boolean result;
+
+        if(controlloDatabase() && controlloCartella()){
+            result=true;
+        }
+        else{
+            result=false;
+        }
+
+        return result;
+
+        /*
         Boolean cDatabase = controlloDatabase();
         Boolean cCartella = controlloCartella();
 
@@ -364,6 +380,7 @@ public class mainActivity extends FragmentActivity implements
         ImageDeTails avviso =
                 (ImageDeTails) getSupportFragmentManager().findFragmentByTag("deTailsRecall");
         avviso.changeText(cCartella, cDatabase);
+        */
     }
 
     public Boolean controlloCartella() {
@@ -443,6 +460,17 @@ public class mainActivity extends FragmentActivity implements
         newFragment.notificationID(idN);
 
         changingFragment(newFragment, "notificationClose", false, false);
+    }
+
+    public void onNotificationContinueSelected(String idN){
+        globals idNotifica = (globals) getApplicationContext();
+        idNotifica.setIdNotifica(idN);
+
+        CameraFragment newFragment = new CameraFragment();
+
+        changingFragment(newFragment, "recallCamera", true, false);
+
+        Log.d("id notifica", idNotifica.getIdNotifica());
     }
 
 

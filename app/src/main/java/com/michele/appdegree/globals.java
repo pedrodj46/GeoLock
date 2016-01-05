@@ -8,7 +8,7 @@ import android.app.Application;
 public class globals extends Application {
 
     private String id;
-    private String idFoto;
+    private String idNotifica;
     //private final static String baseServerUrl = "http://esamiuniud.altervista.org/";
 
     public String getId() {
@@ -19,12 +19,12 @@ public class globals extends Application {
         id = idR;
     }
 
-    public String getIdFoto() {
-        return idFoto;
+    public String getIdNotifica() {
+        return idNotifica;
     }
 
-    public void setIdFoto(String idF) {
-        idFoto = idF;
+    public void setIdNotifica(String idN) {
+        idNotifica = idN;
     }
 
     /*

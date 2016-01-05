@@ -58,6 +58,7 @@ public class ServerConnection {
     Boolean Send;
     Long idFoto;
     String idUt;
+    String idNo;
 
     public boolean sendData(Long midFoto, String mImageName, String mLatitude, String mLongitude, String mAddress,
                          String mDirezioneDispCard, Float mDirezioneDispDegree,
@@ -83,14 +84,17 @@ public class ServerConnection {
         globals idUtente = (globals) main.getApplicationContext();
         idUt = idUtente.getId();
 
+        globals idNotifica = (globals) main.getApplicationContext();
+        idNo= idNotifica.getIdNotifica();
+
         if(isConnected()) {
-            Toast.makeText(Main, "Connesso con il server!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(Main, "Connesso con il server!", Toast.LENGTH_SHORT).show();
 
             // indirizzo a cui inviare i dati
             //new HttpAsyncTask().execute("http://esamiuniud.altervista.org/tesi/ajax.php");
 
             if (invia()) {
-                Toast.makeText(Main, "Data Sent", Toast.LENGTH_LONG).show();
+                //Toast.makeText(Main, "Data Sent", Toast.LENGTH_LONG).show();
                 if(uploadImage()){
                     Ok = true;
                 }
@@ -164,7 +168,7 @@ public class ServerConnection {
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("idUtente", idUt);
-            jsonObject.accumulate("idFoto", idFoto.toString());
+            jsonObject.accumulate("idNotifica", idNo);
             jsonObject.accumulate("name", ImageName);
             jsonObject.accumulate("latitude", Latitude);
             jsonObject.accumulate("longitude", Longitude);

@@ -25,19 +25,19 @@
         android:layout_margin="10dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
+
         <Button
-            android:id="@+id/done_button"
-            android:text="@string/confirm_button"
+            android:id="@+id/back_button"
+            android:text="@string/retake_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_gravity="bottom"
             android:layout_weight="1"
             android:background="@drawable/mybutton"/>
-
         <Button
-            android:id="@+id/back_button"
-            android:text="@string/retake_button"
+            android:id="@+id/done_button"
+            android:text="@string/confirm_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"

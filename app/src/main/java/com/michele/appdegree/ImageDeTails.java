@@ -2,9 +2,11 @@ package com.michele.appdegree;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -73,6 +75,8 @@ public class ImageDeTails extends Fragment implements OnMapReadyCallback {
     private static EditText edittext2;
     private static EditText edittext3;
 
+    String mTextNew;
+
     Button button;
 
     static String Latitude;
@@ -86,12 +90,14 @@ public class ImageDeTails extends Fragment implements OnMapReadyCallback {
     static TextView tvHeading;
     static TextView direzioneSogg;
 
+    ProgressDialog progressDialog;
+
 
     // interfaccia di collegamento con la main activity
     ToolbarListener activityCallback;
 
     public interface ToolbarListener {
-        public void onSendName(String name, Float direzioneDispDegree, String direzioneDispCard,
+        public Boolean onSendName(String name, Float direzioneDispDegree, String direzioneDispCard,
                                Float direzioneSoggDegree, String direzioneSoggCard,
                                Integer distanza);
     }
@@ -204,14 +210,50 @@ public class ImageDeTails extends Fragment implements OnMapReadyCallback {
     }
 
     public void buttonClicked (View view) {
-        if(imageNameControl()) {
-            // invio nome immagine e direzione oggetto
-            activityCallback.onSendName(edittext1.getText().toString(), mDegree,
-                    DirezTelef, DirezSoggeDegree, DirezSogg, distanza);
-        } else {
-            Toast.makeText(getActivity().getApplicationContext(),
-                    "Nome immagine gia' in uso! Inserire un nome differente!", Toast.LENGTH_LONG)
-                    .show();
+
+        mTextNew = edittext1.getText().toString();
+
+        new SendData().execute();
+    }
+
+    public class SendData extends AsyncTask<String, Void, Boolean> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage("Attendere...");
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            Boolean result=false;
+
+            if (imageNameControl()) {
+                // invio nome immagine e direzione oggetto
+                result = activityCallback.onSendName(mTextNew, mDegree,
+                        DirezTelef, DirezSoggeDegree, DirezSogg, distanza);
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "Nome immagine gia' in uso! Inserire un nome differente!", Toast.LENGTH_LONG)
+                        .show();
+            }
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+
+            progressDialog.dismiss();
+
+            changeText(result);
         }
     }
 
@@ -265,16 +307,12 @@ public class ImageDeTails extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    public void changeText(Boolean cartellaOk, Boolean databaseOk) {
+    public void changeText(Boolean result) {
         String testoDialogo = null;
-        if(cartellaOk && databaseOk) {
+        if(result) {
             testoDialogo = "FOTO SALVATA";
-        } else if(cartellaOk && !databaseOk) {
-            testoDialogo = "ERRORE: DATABASE NON AGGIORNATO";
-        } else if(!cartellaOk && databaseOk) {
-            testoDialogo = "ERRORE: FOTO CORROTTA";
-        } else {
-            testoDialogo = "ERRORE: DATI PERSI";
+        } else{
+            testoDialogo = "ERRORE: RISCATTARE LA FOTO!";
         }
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
@@ -297,19 +335,21 @@ public class ImageDeTails extends Fragment implements OnMapReadyCallback {
             }
         });
 
+        /*
         dialog.setPositiveButton(getActivity().getString(R.string.annulla), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+            @Override
+            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
 
-                        // forza il back button fino al fragment della camera
-                        FragmentManager fm = getActivity().getSupportFragmentManager();
-                        int count = fm.getBackStackEntryCount();
-                        while (count > 2) {
-                            fm.popBackStackImmediate();
-                            count--;
-                        }
-                    }
-                });
+                // forza il back button fino al fragment della camera
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                int count = fm.getBackStackEntryCount();
+                while (count > 2) {
+                    fm.popBackStackImmediate();
+                    count--;
+                }
+            }
+        });
+        */
 
         dialog.show();
     }
