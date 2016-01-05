@@ -1,5 +1,6 @@
 package com.michele.appdegree;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.location.Location;
 import android.os.Bundle;
@@ -8,7 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.michele.fragmentexample.R;
@@ -31,6 +34,26 @@ import java.io.InputStreamReader;
  */
 public class notificationDetails extends Fragment {
 
+    // segue l'interfaccia per lo scambio dei dati con la mainActivity
+    ToolbarListener activityCallback;
+
+    public interface ToolbarListener {
+        public void onNotificationCloseSelected(String idN);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            activityCallback = (ToolbarListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement ToolbarListener");
+        }
+    }
+    // fine interfaccia di collegamento con la main activity
+
     String url = "http://esamiuniud.altervista.org/tesi/getNotifications.php?idN=";
     ProgressDialog progressDialog;
     String idN = "";
@@ -45,7 +68,8 @@ public class notificationDetails extends Fragment {
     String mlooking = null;
     String mdegree = null;
     String distance = null;
-    Integer transfered = null;
+    Integer aperta = null;
+    String messaggio = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +79,7 @@ public class notificationDetails extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View baseView = inflater.inflate(R.layout.after_notification, container, false);
+        final View baseView = inflater.inflate(R.layout.after_notification, container, false);
 
         image = (ImageView) baseView.findViewById(R.id.image_selected);
 
@@ -119,10 +143,25 @@ public class notificationDetails extends Fragment {
 
             looking.setText(mdegree + " gradi " + mlooking);
 
-            if (transfered == 0) {
+            if (aperta == 0) {
                 mTransfered.setText("No");
-            } else if (transfered == 1) {
+                LinearLayout msg = (LinearLayout) baseView.findViewById(R.id.innerFrameLayout08);
+                msg.setVisibility(View.VISIBLE);
+                TextView mMessaggio = (TextView) baseView.findViewById(R.id.messaggio);
+                mMessaggio.setText(messaggio);
+            } else if (aperta == 1) {
                 mTransfered.setText("Si");
+                Button btn1 = (Button) baseView.findViewById(R.id.btnReality);
+                btn1.setVisibility(View.VISIBLE);
+                Button btn2 = (Button) baseView.findViewById(R.id.btnContinua);
+                btn2.setVisibility(View.VISIBLE);
+                Button btn3 = (Button) baseView.findViewById(R.id.btnChiudi);
+                btn3.setVisibility(View.VISIBLE);
+                btn3.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        btn3Clicked();
+                    }
+                });
             }
         }
 
@@ -131,6 +170,10 @@ public class notificationDetails extends Fragment {
 
     public void notificationID(String idNotification){
         idN = idNotification;
+    }
+
+    public void btn3Clicked() {
+        activityCallback.onNotificationCloseSelected(idN);
     }
 
     public String GetData(){
@@ -185,7 +228,8 @@ public class notificationDetails extends Fragment {
             direction = c.getString("dirSogg");
             directionDegree = c.getString("angSogg");
             distance = c.getString("distanza");
-            transfered = 1;
+            aperta = c.getInt("aperta");
+            messaggio = c.getString("messaggio");
         }
         catch (Exception e){
             e.printStackTrace();

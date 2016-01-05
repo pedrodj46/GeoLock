@@ -93,8 +93,12 @@ public class mainNotification extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            progressDialog = ProgressDialog.show(getActivity(), "prova", "prova1");
-
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage("Attendere...");
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
         }
 
         @Override

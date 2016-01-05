@@ -28,7 +28,8 @@ import java.io.File;
 public class mainActivity extends FragmentActivity implements
         buttonsFragment.ToolbarListener, CameraFragment.ToolbarListener,
         ImageCaptured.ToolbarListener, ImageDeTails.ToolbarListener, mainGallery.ToolbarListener,
-        loginFragment.ToolbarListener, mainNotification.ToolbarListener{
+        loginFragment.ToolbarListener, mainNotification.ToolbarListener,
+        notificationDetails.ToolbarListener{
 
     // Activity principale che gestisce l'interazione tra tutti di Fragment dell'applicazione e
     // conserva i dati raccolti per il loro inserimento all'interno del database
@@ -436,11 +437,22 @@ public class mainActivity extends FragmentActivity implements
         changingFragment(newFragment, "notificationDetails", true, false);
     }
 
+    public void onNotificationCloseSelected(String idN){
+        notificationClose newFragment = new notificationClose();
+        // invio l'id della notifica da visualizzare nel nuovo fragment
+        newFragment.notificationID(idN);
+
+        changingFragment(newFragment, "notificationClose", false, false);
+    }
+
 
     // ogni volta che bisogna inizializzare un nuovo fragment viene avviato questo metodo
     public void changingFragment(android.support.v4.app.Fragment newFragment, String Tag,
                                  Boolean saveState, Boolean removeState) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
+                R.anim.slide_in_left, R.anim.slide_out_right);
 
         if(removeState) {
             transaction.remove(getSupportFragmentManager()
@@ -449,6 +461,9 @@ public class mainActivity extends FragmentActivity implements
         transaction.replace(R.id.fragment_container, newFragment, Tag);
         if(saveState) {
             transaction.addToBackStack(Tag);
+        }
+        else{
+            transaction.addToBackStack(null);
         }
         // Tag e' il tag con il quale sara' poi richiamato il fragment sucessivamente
         transaction.commit();

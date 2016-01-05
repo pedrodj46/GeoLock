@@ -56,7 +56,8 @@
     <string name="direzobs_section">Direzione in cui era rivolto il dispositivo:</string>
     <string name="direzsub_section">Direzione di movimento del soggetto:</string>
     <string name="distance">Distanza tra il dispositivo e il soggetto:</string>
-    <string name="transfered">Inviata:</string>
+    <string name="transfered">Aperta:</string>
+    <string name="messaggio">Messaggio:</string>
 
     <!-- utility calibrazione -->
     <string name="calibration">Calibrazione Bussola</string>

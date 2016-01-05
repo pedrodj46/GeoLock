@@ -301,7 +301,7 @@ public class ServerConnection {
             jsonObject.accumulate("idN", idN);
             jsonObject.accumulate("letta", 1);
 
-            Log.d("id notifica",idN);
+            Log.d("id notifica", idN);
 
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("jsonNotification", jsonObject.toString()));
@@ -317,6 +317,36 @@ public class ServerConnection {
         catch (Exception e){
             Log.d("errore", "errore "+e);
         }
+    }
+
+    public String closeNotification(String idN, String messaggio){
+        try{
+
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://esamiuniud.altervista.org/tesi/closeNotification.php");
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("idN", idN);
+            jsonObject.accumulate("messaggio", messaggio);
+
+            Log.d("id notifica",idN);
+
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("jsonClose", jsonObject.toString()));
+
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            response = httpclient.execute(httppost);
+            entity = response.getEntity();
+            id = EntityUtils.toString(entity, HTTP.UTF_8);
+
+            Log.d("errore",id);
+
+        }
+        catch (Exception e){
+            Log.d("errore", "errore "+e);
+        }
+
+        return id;
     }
 
     public boolean isConnected(){

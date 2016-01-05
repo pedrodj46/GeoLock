@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.michele.fragmentexample.R;
@@ -45,7 +46,8 @@ public class photoDetails extends Fragment {
     String mlooking = null;
     String mdegree = null;
     String distance = null;
-    Integer transfered = null;
+    Integer aperta = null;
+    String messaggio = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class photoDetails extends Fragment {
         TextView looking = (TextView) baseView.findViewById(R.id.looking);
         TextView mDistance = (TextView) baseView.findViewById(R.id.distance);
         TextView mTransfered = (TextView) baseView.findViewById(R.id.transfered);
+        TextView mMessaggio = (TextView) baseView.findViewById(R.id.messaggio);
 
         String result = GetData();
 
@@ -119,9 +122,12 @@ public class photoDetails extends Fragment {
 
             looking.setText(mdegree + " gradi " + mlooking);
 
-            if (transfered == 0) {
+            if (aperta == 0) {
                 mTransfered.setText("No");
-            } else if (transfered == 1) {
+                LinearLayout ll = (LinearLayout) baseView.findViewById(R.id.innerFrameLayout08);
+                ll.setVisibility(View.VISIBLE);
+                mMessaggio.setText(messaggio);
+            } else if (aperta == 1) {
                 mTransfered.setText("Si");
             }
         }
@@ -185,7 +191,8 @@ public class photoDetails extends Fragment {
             direction = c.getString("dirSogg");
             directionDegree = c.getString("angSogg");
             distance = c.getString("distanza");
-            transfered = 1;
+            aperta = c.getInt("aperta");
+            messaggio = c.getString("messaggio");
         }
         catch (Exception e){
             e.printStackTrace();

@@ -253,6 +253,35 @@
             android:background="@drawable/my_border" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/innerFrameLayout08"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/title_messaggio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:text="@string/messaggio"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/my_border" />
+
+        <TextView
+            android:id="@+id/messaggio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/my_border" />
+    </LinearLayout>
+
 </TableLayout>
 </ScrollView>
 

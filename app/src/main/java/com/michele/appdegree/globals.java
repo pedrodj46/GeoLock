@@ -8,10 +8,8 @@ import android.app.Application;
 public class globals extends Application {
 
     private String id;
-    private final static String baseServerUrl = "http://esamiuniud.altervista.org/";
-    private final static String homeServerUrl = "encimg/";
-    private final static String passwordServerUrl = "dim-pass.php";
-    private final static String uploadServerUrl = "inserita-foto.php";
+    private String idFoto;
+    //private final static String baseServerUrl = "http://esamiuniud.altervista.org/";
 
     public String getId() {
         return id;
@@ -21,15 +19,17 @@ public class globals extends Application {
         id = idR;
     }
 
+    public String getIdFoto() {
+        return idFoto;
+    }
+
+    public void setIdFoto(String idF) {
+        idFoto = idF;
+    }
+
     /*
-    public static String getHomeServerUrl() {
-        return baseServerUrl + homeServerUrl;
-    }
-    public static String getPasswordServerUrl() {
-        return baseServerUrl + homeServerUrl + passwordServerUrl;
-    }
-    public static String getUploadServerUrl() {
-        return globals.getHomeServerUrl() + "/" + uploadServerUrl;
+    public static String getServerUrl() {
+        return baseServerUrl;
     }
     */
 
