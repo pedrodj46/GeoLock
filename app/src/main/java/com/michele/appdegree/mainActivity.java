@@ -121,7 +121,7 @@ public class mainActivity extends FragmentActivity implements
 
                     Log.d("idutente", idU);
 
-                    if (idU.equals("0")) {
+                    if(idU.equals("0")) {
                         // crea il primo fragment
                         loginFragment firstFragment = new loginFragment();
 
@@ -214,12 +214,6 @@ public class mainActivity extends FragmentActivity implements
             alertDialog.show();
         }
         else if(idU.equals("-1")){
-            // crea il primo fragment
-            loginFragment firstFragment = new loginFragment();
-
-            // inizializza fragment menu iniziale
-            changingFragment(firstFragment, "recallLogin", false, true);
-
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
             dialog.setMessage(stringDialog).setTitle("Errore!");
             dialog.setMessage(stringDialog).setMessage("Il tuo account è stato disattivato!");
@@ -683,7 +677,7 @@ public class mainActivity extends FragmentActivity implements
 
                             public void onClick(DialogInterface arg0, int arg1) {
                                 SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                                editor.remove("username");
+                                //editor.remove("username");
                                 editor.remove("password");
                                 editor.commit();
 
