@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -35,6 +37,13 @@ public class loginFragment  extends Fragment {
     }
     // fine interfaccia di collegamento con la main activity
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
+    }
+
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.login,
@@ -53,6 +62,13 @@ public class loginFragment  extends Fragment {
 
     public void buttonClicked (View view) {
         activityCallback.onButtonLogin();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu,  MenuInflater inflate) {
+        menu.clear();
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.menu_vuoto, menu);
     }
 
 }

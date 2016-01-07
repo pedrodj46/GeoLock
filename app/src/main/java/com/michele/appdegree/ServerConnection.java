@@ -159,12 +159,6 @@ public class ServerConnection {
         try{
             httpclient = new DefaultHttpClient();
             httppost = new HttpPost("http://esamiuniud.altervista.org/tesi/sendData.php");
-            //nameValuePairs = new ArrayList<NameValuePair>(2);
-
-            //nameValuePairs.add(new BasicNameValuePair("username", "pedrodj46"));
-            //nameValuePairs.add(new BasicNameValuePair("password", "prova"));
-
-            String json = "";
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("idUtente", idUt);
@@ -188,13 +182,9 @@ public class ServerConnection {
             id = EntityUtils.toString(entity, HTTP.UTF_8);
 
             if(id.equals("1")){
-                //Toast.makeText(Main,"Collegato: "+id,Toast.LENGTH_SHORT).show();
-
                 Send=true;
             }
             else{
-                //Toast.makeText(Main,"Errore: "+id,Toast.LENGTH_LONG).show();
-
                 Send=false;
             }
         }
@@ -331,7 +321,7 @@ public class ServerConnection {
             jsonObject.accumulate("idN", idN);
             jsonObject.accumulate("messaggio", messaggio);
 
-            Log.d("id notifica",idN);
+            Log.d("id notifica", idN);
 
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("jsonClose", jsonObject.toString()));

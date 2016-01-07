@@ -18,6 +18,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -63,6 +64,8 @@ public class mainActivity extends FragmentActivity implements
 
         setContentView(R.layout.main);
 
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayShowHomeEnabled(true);
         //getActionBar().setDisplayHomeAsUpEnabled(true);
 
         // registra il tokenid
@@ -136,7 +139,27 @@ public class mainActivity extends FragmentActivity implements
                         });
                         AlertDialog alertDialog = dialog.create();
                         alertDialog.show();
-                    } else {
+                    }
+                    else if(idU.equals("-1")){
+                        // crea il primo fragment
+                        loginFragment firstFragment = new loginFragment();
+
+                        // inizializza fragment menu iniziale
+                        changingFragment(firstFragment, "recallLogin", false, true);
+
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                        dialog.setMessage(stringDialog).setTitle("Errore!");
+                        dialog.setMessage(stringDialog).setMessage("Il tuo account è stato disattivato!");
+                        dialog.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        AlertDialog alertDialog = dialog.create();
+                        alertDialog.show();
+                    }
+                    else {
                         globals idUtente = (globals) getApplicationContext();
                         idUtente.setId(idU);
 
@@ -152,7 +175,7 @@ public class mainActivity extends FragmentActivity implements
                     loginFragment firstFragment = new loginFragment();
 
                     // inizializza fragment menu iniziale
-                    changingFragment(firstFragment, "recallLogin", false, true);
+                    changingFragment(firstFragment, "recallLogin", false, false);
                 }
             }
         }
@@ -190,6 +213,25 @@ public class mainActivity extends FragmentActivity implements
             AlertDialog alertDialog = dialog.create();
             alertDialog.show();
         }
+        else if(idU.equals("-1")){
+            // crea il primo fragment
+            loginFragment firstFragment = new loginFragment();
+
+            // inizializza fragment menu iniziale
+            changingFragment(firstFragment, "recallLogin", false, true);
+
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setMessage(stringDialog).setTitle("Errore!");
+            dialog.setMessage(stringDialog).setMessage("Il tuo account è stato disattivato!");
+            dialog.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            AlertDialog alertDialog = dialog.create();
+            alertDialog.show();
+        }
         else{
             globals idUtente = (globals) getApplicationContext();
             idUtente.setId(idU);
@@ -213,7 +255,7 @@ public class mainActivity extends FragmentActivity implements
             myFragment.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
             buttonsFragment newFragment = new buttonsFragment();
-            changingFragment(newFragment, "recallButton", true, false);
+            changingFragment(newFragment, "recallButtons", true, false);
 
             // abilita il servizio di localizzazione automatico
             LocationUpdate start = new LocationUpdate();
@@ -593,7 +635,7 @@ public class mainActivity extends FragmentActivity implements
             // in tutti gli altri casi il back button attiva una finestra di dialogo che
             // chiede conferma per l'uscita dal programma
             new AlertDialog.Builder(this)
-                    .setMessage("Vuoi chiudere il programma?")
+                    .setMessage("Vuoi chiudere l'applicazione?")
                     .setNegativeButton("Conferma", new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface arg0, int arg1) {
@@ -624,9 +666,9 @@ public class mainActivity extends FragmentActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // gestisce il menu
-        menu.add(Menu.NONE, R.id.menu_action1, Menu.NONE, R.string.menu_action1);
-        menu.add(Menu.NONE, R.id.menu_action2, Menu.NONE, R.string.menu_action2);
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -635,26 +677,40 @@ public class mainActivity extends FragmentActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_action1:
-                Log.d("btn","hai cliccato il btn 1");
+                new AlertDialog.Builder(this)
+                        .setMessage("Vuoi effettuare il logout?")
+                        .setNegativeButton("Conferma", new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                editor.remove("username");
+                                editor.remove("password");
+                                editor.commit();
+
+                                FragmentManager myFragment = getSupportFragmentManager();
+                                myFragment.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+                                loginFragment firstFragment = new loginFragment();
+                                changingFragment(firstFragment, "recallLogin", false, false);
+                            }
+                        })
+                        .setPositiveButton("Annulla", null).create().show();
                 return true;
-            case R.id.menu_action2:
-                Log.d("btn","hai cliccato il btn 2");
-
-                SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                editor.remove("username");
-                editor.remove("password");
-                editor.commit();
-
-                FragmentManager myFragment = getSupportFragmentManager();
-                myFragment.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-                loginFragment firstFragment = new loginFragment();
-                changingFragment(firstFragment, "recallLogin", false, true);
-
+            case android.R.id.home:
+                onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    /*
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        switch (item.getItemId()) {
+        }
+        return false;
+    }
+    */
 
 }

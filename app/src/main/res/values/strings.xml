@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">GeoLock</string>
 
-    <string name="menu_action1">Settings</string>
-    <string name="menu_action2">Logout</string>
+    <string name="menu_action1">Logout</string>
 
     <!-- BUTTONS FRAGMENT -->
     <string name="button01">CAMERA</string>

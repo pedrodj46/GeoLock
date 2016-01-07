@@ -47,6 +47,12 @@ public class buttonsFragment extends Fragment {
     }
     // fine interfaccia di collegamento con la main activity
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater,

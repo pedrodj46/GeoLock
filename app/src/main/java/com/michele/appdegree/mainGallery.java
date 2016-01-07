@@ -67,6 +67,8 @@ public class mainGallery extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+
         globals idUtente = (globals) getActivity().getApplicationContext();
         String idU = idUtente.getId();
 
