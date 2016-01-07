@@ -1,11 +1,17 @@
 package com.michele.appdegree;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
+import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.michele.fragmentexample.R;
@@ -28,7 +34,8 @@ public class afterNotification extends FragmentActivity {
     String mlooking = null;
     String mdegree = null;
     String distance = null;
-    Integer transfered = null;
+    Integer aperta = null;
+    String messaggio = null;
 
     Bundle extras;
     String idFoto;
@@ -37,6 +44,8 @@ public class afterNotification extends FragmentActivity {
     JSONObject obj;
 
     String urlPath = "http://esamiuniud.altervista.org/tesi/img/";
+
+    public static final String MY_PREFS_NAME = "ricordamiLogin";
 
 
     @Override
@@ -54,6 +63,41 @@ public class afterNotification extends FragmentActivity {
 
         setContentView(R.layout.after_notification);
 
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        if (prefs.getString("username", "0") != "0" && prefs.getString("password", "0") != "0") {
+            String username = new String(Base64.decode(prefs.getString("username", "0"), Base64.DEFAULT));
+            String password = new String(Base64.decode(prefs.getString("password", "0"), Base64.DEFAULT));
+
+            Log.d("username", username);
+            Log.d("password", password);
+
+            String idU;
+
+            ServerConnection sendLogin = new ServerConnection();
+            idU = sendLogin.sendLogin(username, password, this);
+
+            Log.d("idutente", idU);
+
+            if (idU.equals("0")) {
+                Intent intent = new Intent(afterNotification.this, mainActivity.class);
+                Bundle b = new Bundle();
+                b.putString("idN", "0");
+                b.putInt("case", 0);
+                intent.putExtras(b);
+                startActivity(intent);
+                finish();
+            }
+        }
+        else{
+            Intent intent = new Intent(afterNotification.this, mainActivity.class);
+            Bundle b = new Bundle();
+            b.putString("idN", "0");
+            b.putInt("case", 0);
+            intent.putExtras(b);
+            startActivity(intent);
+            finish();
+        }
+
         String json=photoDetails();
 
         Log.d("json:", json);
@@ -70,7 +114,8 @@ public class afterNotification extends FragmentActivity {
             direction = obj.getString("dirSogg");
             directionDegree = obj.getString("angSogg");
             distance = obj.getString("distanza");
-            transfered = 1;
+            aperta = obj.getInt("aperta");
+            messaggio = obj.getString("messaggio");
         }
         catch (Exception e){
             Log.d("errore",e.toString());
@@ -137,13 +182,56 @@ public class afterNotification extends FragmentActivity {
 
         looking.setText(mdegree + " gradi " + mlooking);
 
-        if(transfered==0){
+        if(aperta==0){
             mTransfered.setText("No");
+            LinearLayout msg = (LinearLayout) findViewById(R.id.innerFrameLayout08);
+            msg.setVisibility(View.VISIBLE);
+            TextView mMessaggio = (TextView) findViewById(R.id.messaggio);
+            mMessaggio.setText(messaggio);
         }
-        else if(transfered==1){
+        else if(aperta==1){
             mTransfered.setText("Si");
+            Button btn1 = (Button) findViewById(R.id.btnReality);
+            btn1.setVisibility(View.VISIBLE);
+            Button btn2 = (Button) findViewById(R.id.btnContinua);
+            btn2.setVisibility(View.VISIBLE);
+            btn2.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    btn2Clicked();
+                }
+            });
+            Button btn3 = (Button) findViewById(R.id.btnChiudi);
+            btn3.setVisibility(View.VISIBLE);
+            btn3.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    btn3Clicked();
+                }
+            });
         }
 
+    }
+
+    public void btn2Clicked() {
+
+        Intent intent = new Intent(afterNotification.this, mainActivity.class);
+        Bundle b = new Bundle();
+        b.putString("idN", idNotifica);
+        b.putInt("case", 2);
+        intent.putExtras(b);
+        startActivity(intent);
+        finish();
+
+    }
+
+    public void btn3Clicked() {
+
+        Intent intent = new Intent(afterNotification.this, mainActivity.class);
+        Bundle b = new Bundle();
+        b.putString("idN", idNotifica);
+        b.putInt("case", 3);
+        intent.putExtras(b);
+        startActivity(intent);
+        finish();
     }
 
     // void che interagisce con il server

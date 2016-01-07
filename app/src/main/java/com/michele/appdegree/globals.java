@@ -9,6 +9,7 @@ public class globals extends Application {
 
     private String id;
     private String idNotifica;
+    private Boolean bool;
     //private final static String baseServerUrl = "http://esamiuniud.altervista.org/";
 
     public String getId() {
@@ -25,6 +26,14 @@ public class globals extends Application {
 
     public void setIdNotifica(String idN) {
         idNotifica = idN;
+    }
+
+    public Boolean getIsFromNotifica() {
+        return bool;
+    }
+
+    public void setIsFromNotifica(Boolean isFromNotifica) {
+        bool = isFromNotifica;
     }
 
     /*

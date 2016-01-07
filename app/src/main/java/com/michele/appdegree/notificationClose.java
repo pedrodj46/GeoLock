@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,7 +113,19 @@ public class notificationClose extends Fragment {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
-                                getFragmentManager().popBackStack();
+                                FragmentManager fm = getActivity().getSupportFragmentManager();
+                                int count = fm.getBackStackEntryCount();
+                                if (count > 1) {
+                                    getFragmentManager().popBackStack();
+                                } else {
+                                    buttonsFragment newFragment = new buttonsFragment();
+                                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                    transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
+                                            R.anim.slide_in_left, R.anim.slide_out_right);
+                                    transaction.replace(R.id.fragment_container, newFragment, "recallButton");
+                                    transaction.addToBackStack("recallButton");
+                                    transaction.commit();
+                                }
                             }
                         });
                 alertDialog.show();

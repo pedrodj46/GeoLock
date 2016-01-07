@@ -3,6 +3,7 @@ package com.michele.appdegree;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
@@ -75,62 +76,84 @@ public class mainActivity extends FragmentActivity implements
                 return;
             }
 
-            // setto a 0 l'id notifica
-            globals idNotifica = (globals) getApplicationContext();
-            idNotifica.setIdNotifica("0");
+            Intent intent = getIntent();
+            if(intent.hasExtra("idN") && intent.hasExtra("case")){
+                Bundle b = getIntent().getExtras();
+                int value = b.getInt("case");
+                String idN = b.getString("idN");
+                if(value==0){
+                    loginFragment firstFragment = new loginFragment();
+                    changingFragment(firstFragment, "recallLogin", false, true);
+                }
+                else if(value==1){
+                    // virtual reality
+                }
+                else if(value==2){
+                    globals isFromNotifica = (globals) getApplicationContext();
+                    isFromNotifica.setIsFromNotifica(true);
+                    onNotificationContinueSelected(idN);
+                }
+                else if(value==3){
+                    onNotificationCloseSelected(idN);
+                }
+            }
+            else {
+                // setto a 0 l'id notifica
+                globals idNotifica = (globals) getApplicationContext();
+                idNotifica.setIdNotifica("0");
 
-            // ricordami Login
-            SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-            if(prefs.getString("username", "0")!="0" && prefs.getString("password", "0")!="0") {
-                String username = new String(Base64.decode(prefs.getString("username", "0"), Base64.DEFAULT));
-                String password = new String(Base64.decode(prefs.getString("password", "0"), Base64.DEFAULT));
+                // ricordami Login
+                SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                if (prefs.getString("username", "0") != "0" && prefs.getString("password", "0") != "0") {
+                    String username = new String(Base64.decode(prefs.getString("username", "0"), Base64.DEFAULT));
+                    String password = new String(Base64.decode(prefs.getString("password", "0"), Base64.DEFAULT));
 
-                Log.d("username", username);
-                Log.d("password", password);
+                    Log.d("username", username);
+                    Log.d("password", password);
 
-                String idU;
+                    String idU;
 
-                ServerConnection sendLogin = new ServerConnection();
-                idU = sendLogin.sendLogin(username, password, this);
+                    ServerConnection sendLogin = new ServerConnection();
+                    idU = sendLogin.sendLogin(username, password, this);
 
-                Log.d("idutente", idU.toString());
+                    Log.d("idutente", idU);
 
-                if (idU.equals("0")) {
+                    if (idU.equals("0")) {
+                        // crea il primo fragment
+                        loginFragment firstFragment = new loginFragment();
+
+                        // inizializza fragment menu iniziale
+                        changingFragment(firstFragment, "recallLogin", false, true);
+
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                        dialog.setMessage(stringDialog).setTitle("Errore!");
+                        dialog.setMessage(stringDialog).setMessage("Inserire username e password corretti!");
+                        dialog.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        AlertDialog alertDialog = dialog.create();
+                        alertDialog.show();
+                    } else {
+                        globals idUtente = (globals) getApplicationContext();
+                        idUtente.setId(idU);
+
+                        buttonsFragment btnFragment = new buttonsFragment();
+                        changingFragment(btnFragment, "recallButtons", true, false);
+
+                        // abilita il servizio di localizzazione automatico
+                        LocationUpdate start = new LocationUpdate();
+                        start.startServiceLocation(this);
+                    }
+                } else {
                     // crea il primo fragment
                     loginFragment firstFragment = new loginFragment();
 
                     // inizializza fragment menu iniziale
                     changingFragment(firstFragment, "recallLogin", false, true);
-
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                    dialog.setMessage(stringDialog).setTitle("Errore!");
-                    dialog.setMessage(stringDialog).setMessage("Inserire username e password corretti!");
-                    dialog.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    AlertDialog alertDialog = dialog.create();
-                    alertDialog.show();
-                } else {
-                    globals idUtente = (globals) getApplicationContext();
-                    idUtente.setId(idU);
-
-                    buttonsFragment btnFragment = new buttonsFragment();
-                    changingFragment(btnFragment, "recallButton", true, false);
-
-                    // abilita il servizio di localizzazione automatico
-                    LocationUpdate start = new LocationUpdate();
-                    start.startServiceLocation(this);
                 }
-            }
-            else {
-                // crea il primo fragment
-                loginFragment firstFragment = new loginFragment();
-
-                // inizializza fragment menu iniziale
-                changingFragment(firstFragment, "recallLogin", false, true);
             }
         }
     }
@@ -152,7 +175,7 @@ public class mainActivity extends FragmentActivity implements
         ServerConnection sendLogin = new ServerConnection();
         idU=sendLogin.sendLogin(usernameText, passwordText, this);
 
-        Log.d("id", idU.toString());
+        Log.d("id", idU);
 
         if(idU.equals("0")){
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -459,7 +482,7 @@ public class mainActivity extends FragmentActivity implements
         // invio l'id della notifica da visualizzare nel nuovo fragment
         newFragment.notificationID(idN);
 
-        changingFragment(newFragment, "notificationClose", false, false);
+        changingFragment(newFragment, "notificationClose", false, true);
     }
 
     public void onNotificationContinueSelected(String idN){

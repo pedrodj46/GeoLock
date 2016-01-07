@@ -324,12 +324,29 @@ public class ImageDeTails extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(DialogInterface paramDialogInterface, int paramInt) {
 
-                // forza il back button fino al fragment del menu iniziale
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                int count = fm.getBackStackEntryCount();
-                while (count > 1) {
-                    fm.popBackStackImmediate();
-                    count--;
+                globals isFromNotifica = (globals) getActivity().getApplicationContext();
+                if(isFromNotifica.getIsFromNotifica()!=null){
+                    if(isFromNotifica.getIsFromNotifica()) {
+                        isFromNotifica.setIsFromNotifica(false);
+                        FragmentManager myFragment = getActivity().getSupportFragmentManager();
+                        myFragment.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        buttonsFragment newFragment = new buttonsFragment();
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
+                                R.anim.slide_in_left, R.anim.slide_out_right);
+                        ft.replace(R.id.fragment_container, newFragment, "recallButtons");
+                        ft.addToBackStack("recallButtons");
+                        ft.commit();
+                    }
+                }
+                else {
+                    // forza il back button fino al fragment del menu iniziale
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    int count = fm.getBackStackEntryCount();
+                    while (count > 1) {
+                        fm.popBackStackImmediate();
+                        count--;
+                    }
                 }
 
             }

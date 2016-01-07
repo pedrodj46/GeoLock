@@ -315,8 +315,6 @@ public class ServerConnection {
             entity = response.getEntity();
             id = EntityUtils.toString(entity, HTTP.UTF_8);
 
-            Log.d("errore",id);
-
         }
         catch (Exception e){
             Log.d("errore", "errore "+e);
@@ -342,8 +340,6 @@ public class ServerConnection {
             response = httpclient.execute(httppost);
             entity = response.getEntity();
             id = EntityUtils.toString(entity, HTTP.UTF_8);
-
-            Log.d("errore",id);
 
         }
         catch (Exception e){
