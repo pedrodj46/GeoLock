@@ -2,62 +2,58 @@
 
 <!-- layout del menu iniziale -->
 
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#222222">
-
-<android.support.v4.widget.DrawerLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal"></android.support.v4.widget.DrawerLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:background="@color/primary">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_gravity="center|center_vertical"
-        android:background="#444">
+        android:layout_height="wrap_content"
+        android:paddingTop="56dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
-        <TextView
+        <ImageView android:src="@drawable/logo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Inserisci le credenziali"
-            android:id="@+id/textView3"
-            android:layout_gravity="center_horizontal"
-            android:textColor="#fff" />
+            android:layout_height="72dp"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center_horizontal" />
 
-        <EditText
+        <!-- Email Label -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/usernameWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:ems="10"
-            android:id="@+id/loginUsername"
-            android:layout_gravity="center_horizontal"
-            android:background="#fff"
-            android:textColor="#000"
-            android:hint="Username"
-            android:layout_marginLeft="30px"
-            android:layout_marginTop="60px"
-            android:layout_marginRight="30px"
-            android:padding="5px" />
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            app:hintTextAppearance="@android:style/TextAppearance.Medium">
+            <EditText android:id="@+id/loginUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Username" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
+        <!-- Password Label -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/passwordWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/loginPassword"
-            android:layout_gravity="center_horizontal"
-            android:textColor="#000"
-            android:background="#fff"
-            android:layout_marginTop="60px"
-            android:hint="Password"
-            android:layout_marginLeft="30px"
-            android:layout_marginRight="30px"
-            android:padding="5px" />
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            app:hintTextAppearance="@android:style/TextAppearance.Medium">
+            <EditText android:id="@+id/loginPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="Password"/>
+        </android.support.design.widget.TextInputLayout>
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -65,16 +61,17 @@
             android:text="Ricordami"
             android:id="@+id/loginCheckbox"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="60px"
+            android:layout_marginTop="8dp"
             android:textColor="#fff" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="LOGIN"
             android:id="@+id/loginSend"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="60px" />
+            android:layout_marginTop="20dp"
+            android:background="@color/accent"/>
     </LinearLayout>
 
-</FrameLayout>
+</ScrollView>

@@ -1,7 +1,10 @@
 package com.michele.appdegree;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -9,6 +12,8 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -62,6 +67,17 @@ public class afterNotification extends FragmentActivity {
         idNotifica = extras.getString("id_notifica");
 
         setContentView(R.layout.after_notification);
+
+        final ActionBar actionBar = getActionBar();
+        actionBar.setCustomView(R.layout.custom_actionbar);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#03A9F4")));
+
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getResources().getColor(R.color.primary_dark));
 
         SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         if (prefs.getString("username", "0") != "0" && prefs.getString("password", "0") != "0") {

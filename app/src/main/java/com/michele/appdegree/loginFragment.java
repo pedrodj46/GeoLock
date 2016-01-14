@@ -47,6 +47,8 @@ public class loginFragment  extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getActivity().getActionBar().hide();
+
         setHasOptionsMenu(true);
     }
 

@@ -1,5 +1,6 @@
 package com.michele.appdegree;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -9,6 +10,8 @@ import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
@@ -20,6 +23,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
@@ -64,9 +69,20 @@ public class mainActivity extends FragmentActivity implements
 
         setContentView(R.layout.main);
 
-        getActionBar().setHomeButtonEnabled(true);
-        getActionBar().setDisplayShowHomeEnabled(true);
+        //getActionBar().setHomeButtonEnabled(true);
+        //getActionBar().setDisplayShowHomeEnabled(true);
         //getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        final ActionBar actionBar = getActionBar();
+        actionBar.setCustomView(R.layout.custom_actionbar);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#03A9F4")));
+
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getResources().getColor(R.color.primary_dark));
 
         // registra il tokenid
         GcmPushNotifications registration = new GcmPushNotifications();
@@ -86,7 +102,7 @@ public class mainActivity extends FragmentActivity implements
                 String idN = b.getString("idN");
                 if(value==0){
                     loginFragment firstFragment = new loginFragment();
-                    changingFragment(firstFragment, "recallLogin", false, true);
+                    changingFragment(firstFragment, "recallLogin", false, false);
                 }
                 else if(value==1){
                     // virtual reality
@@ -126,7 +142,7 @@ public class mainActivity extends FragmentActivity implements
                         loginFragment firstFragment = new loginFragment();
 
                         // inizializza fragment menu iniziale
-                        changingFragment(firstFragment, "recallLogin", false, true);
+                        changingFragment(firstFragment, "recallLogin", false, false);
 
                         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                         dialog.setMessage(stringDialog).setTitle("Errore!");
@@ -145,7 +161,7 @@ public class mainActivity extends FragmentActivity implements
                         loginFragment firstFragment = new loginFragment();
 
                         // inizializza fragment menu iniziale
-                        changingFragment(firstFragment, "recallLogin", false, true);
+                        changingFragment(firstFragment, "recallLogin", false, false);
 
                         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                         dialog.setMessage(stringDialog).setTitle("Errore!");
@@ -190,20 +206,10 @@ public class mainActivity extends FragmentActivity implements
         String usernameText = username.getText().toString();
         String passwordText = password.getText().toString();
 
-        Log.d("username", usernameText);
-        Log.d("password", passwordText);
-
-        String idU;
-
-        ServerConnection sendLogin = new ServerConnection();
-        idU=sendLogin.sendLogin(usernameText, passwordText, this);
-
-        Log.d("id", idU);
-
-        if(idU.equals("0")){
+        if(usernameText.equals("") || passwordText.equals("")){
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
             dialog.setMessage(stringDialog).setTitle("Errore!");
-            dialog.setMessage(stringDialog).setMessage("Inserire username e password corretti!");
+            dialog.setMessage(stringDialog).setMessage("Inserire username e/o password!");
             dialog.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -213,47 +219,70 @@ public class mainActivity extends FragmentActivity implements
             AlertDialog alertDialog = dialog.create();
             alertDialog.show();
         }
-        else if(idU.equals("-1")){
-            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-            dialog.setMessage(stringDialog).setTitle("Errore!");
-            dialog.setMessage(stringDialog).setMessage("Il tuo account è stato disattivato!");
-            dialog.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
+        else {
+
+            Log.d("username", usernameText);
+            Log.d("password", passwordText);
+
+            String idU;
+
+            ServerConnection sendLogin = new ServerConnection();
+            idU = sendLogin.sendLogin(usernameText, passwordText, this);
+
+            Log.d("id", idU);
+
+            if (idU.equals("0")) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setMessage(stringDialog).setTitle("Errore!");
+                dialog.setMessage(stringDialog).setMessage("Inserire username e password corretti!");
+                dialog.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                AlertDialog alertDialog = dialog.create();
+                alertDialog.show();
+            } else if (idU.equals("-1")) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setMessage(stringDialog).setTitle("Errore!");
+                dialog.setMessage(stringDialog).setMessage("Il tuo account è stato disattivato!");
+                dialog.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                AlertDialog alertDialog = dialog.create();
+                alertDialog.show();
+            } else {
+                globals idUtente = (globals) getApplicationContext();
+                idUtente.setId(idU);
+
+                if (ricordami.isChecked()) {
+                    SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                    editor.putString("username", Base64.encodeToString(usernameText.getBytes(), Base64.DEFAULT));
+                    editor.putString("password", Base64.encodeToString(passwordText.getBytes(), Base64.DEFAULT));
+                    editor.commit();
+                } else {
+                    SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                    editor.remove("username");
+                    editor.remove("password");
+                    editor.commit();
                 }
-            });
-            AlertDialog alertDialog = dialog.create();
-            alertDialog.show();
-        }
-        else{
-            globals idUtente = (globals) getApplicationContext();
-            idUtente.setId(idU);
 
-            if(ricordami.isChecked()){
-                SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                editor.putString("username", Base64.encodeToString(usernameText.getBytes(), Base64.DEFAULT));
-                editor.putString("password", Base64.encodeToString(passwordText.getBytes(), Base64.DEFAULT));
-                editor.commit();
+                Log.d("entra", "si");
+
+                FragmentManager myFragment = getSupportFragmentManager();
+                myFragment.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+                buttonsFragment newFragment = new buttonsFragment();
+                changingFragment(newFragment, "recallButtons", true, false);
+
+                // abilita il servizio di localizzazione automatico
+                LocationUpdate start = new LocationUpdate();
+                start.startServiceLocation(this);
             }
-            else{
-                SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                editor.remove("username");
-                editor.remove("password");
-                editor.commit();
-            }
-
-            Log.d("entra", "si");
-
-            FragmentManager myFragment = getSupportFragmentManager();
-            myFragment.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-            buttonsFragment newFragment = new buttonsFragment();
-            changingFragment(newFragment, "recallButtons", true, false);
-
-            // abilita il servizio di localizzazione automatico
-            LocationUpdate start = new LocationUpdate();
-            start.startServiceLocation(this);
         }
     }
 
@@ -400,7 +429,7 @@ public class mainActivity extends FragmentActivity implements
 
     // conferma il salvataggio della foto al fragment camera
     public Boolean onSendName(String name, Float direzioneDispDegree, String direzioneDispCard,
-                           Float direzioneSoggDegree, String direzioneSoggCard, Integer distanza) {
+                              Float direzioneSoggDegree, String direzioneSoggCard, Integer distanza) {
         nameImage = null;
         nameImage = name;
         mDirezioneDispDegree = 0.0f;
@@ -434,7 +463,6 @@ public class mainActivity extends FragmentActivity implements
         /*
         Boolean cDatabase = controlloDatabase();
         Boolean cCartella = controlloCartella();
-
         // infine comunico la riuscita dell'operazione
         ImageDeTails avviso =
                 (ImageDeTails) getSupportFragmentManager().findFragmentByTag("deTailsRecall");
@@ -493,7 +521,6 @@ public class mainActivity extends FragmentActivity implements
         galleryPhotoDeTails newFragment = new galleryPhotoDeTails();
         // invio il percorso dell'immagine da visualizzare nel nuovo fragment
         newFragment.displayImage(imagePath);
-
         changingFragment(newFragment, "galleryImageDeTails", true, false);
     }*/
 
@@ -518,7 +545,7 @@ public class mainActivity extends FragmentActivity implements
         // invio l'id della notifica da visualizzare nel nuovo fragment
         newFragment.notificationID(idN);
 
-        changingFragment(newFragment, "notificationClose", false, true);
+        changingFragment(newFragment, "notificationClose", false, false);
     }
 
     public void onNotificationContinueSelected(String idN){
@@ -538,8 +565,10 @@ public class mainActivity extends FragmentActivity implements
                                  Boolean saveState, Boolean removeState) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
-                R.anim.slide_in_left, R.anim.slide_out_right);
+        if(!Tag.equals("recallLogin")) {
+            transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
+                    R.anim.slide_in_left, R.anim.slide_out_right);
+        }
 
         if(removeState) {
             transaction.remove(getSupportFragmentManager()
@@ -624,8 +653,9 @@ public class mainActivity extends FragmentActivity implements
         // recupero i frammenti interessati e permetto solo a questi di tornare al fragment
         // precedente tramite il back button
         FragmentManager myFragment = getSupportFragmentManager();
-        if(myFragment.findFragmentByTag("recallButtons") != null &&
-                myFragment.findFragmentByTag("recallButtons").isVisible()) {
+        if((myFragment.findFragmentByTag("recallButtons") != null &&
+                myFragment.findFragmentByTag("recallButtons").isVisible()) || (myFragment.findFragmentByTag("recallLogin") != null &&
+                myFragment.findFragmentByTag("recallLogin").isVisible())) {
             // in tutti gli altri casi il back button attiva una finestra di dialogo che
             // chiede conferma per l'uscita dal programma
             new AlertDialog.Builder(this)
