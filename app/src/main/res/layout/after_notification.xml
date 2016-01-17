@@ -5,13 +5,13 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scrollView01"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#c1dcb8">
+    android:layout_height="match_parent">
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tableNotification">
+        android:id="@+id/tableNotification"
+        android:paddingBottom="10dp">
 
         <ImageView
             android:id="@+id/image_selected"
@@ -19,8 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginRight="10dp"/>
 
         <LinearLayout
             android:id="@+id/innerFrameLayout00"
@@ -28,27 +27,30 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="5dp">
+            android:layout_marginBottom="15dp">
 
             <TextView
                 android:id="@+id/title_ImageName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.6"
                 android:text="@string/name_section"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="2dp"
-                android:background="@drawable/my_border"/>
+                android:textColor="@color/primary"
+                android:gravity="right"
+                android:textAlignment="gravity"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/ImageName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.4"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/my_border"/>
+                android:layout_marginLeft="15dp"/>
 
         </LinearLayout>
 
@@ -57,27 +59,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="5dp">
+            android:layout_marginBottom="15dp">
 
             <TextView
                 android:id="@+id/title_latitude"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.6"
                 android:text="@string/lat_section"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="2dp"
-                android:background="@drawable/my_border"/>
+                android:textColor="@color/primary"
+                android:gravity="right"
+                android:textAlignment="gravity"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/latitude"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.4"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/my_border"/>
+                android:layout_marginLeft="15dp"/>
 
         </LinearLayout>
 
@@ -86,27 +91,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="5dp">
+            android:layout_marginBottom="15dp">
 
             <TextView
                 android:id="@+id/title_longitude"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.6"
                 android:text="@string/long_section"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="2dp"
-                android:background="@drawable/my_border"/>
+                android:textColor="@color/primary"
+                android:gravity="right"
+                android:textAlignment="gravity"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/longitude"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.4"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/my_border"/>
+                android:layout_marginLeft="15dp"/>
 
         </LinearLayout>
 
@@ -115,27 +123,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="5dp">
+            android:layout_marginBottom="15dp">
 
             <TextView
                 android:id="@+id/title_address"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.6"
                 android:text="@string/address_section"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="2dp"
-                android:background="@drawable/my_border"/>
+                android:textColor="@color/primary"
+                android:gravity="right"
+                android:textAlignment="gravity"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.4"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/my_border"/>
+                android:layout_marginLeft="15dp"/>
 
         </LinearLayout>
 
@@ -144,27 +155,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="5dp">
+            android:layout_marginBottom="15dp">
 
             <TextView
                 android:id="@+id/title_looking"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.6"
                 android:text="@string/direzobs_section"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="2dp"
-                android:background="@drawable/my_border"/>
+                android:textColor="@color/primary"
+                android:gravity="right"
+                android:textAlignment="gravity"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/looking"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.4"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/my_border"/>
+                android:layout_marginLeft="15dp"/>
 
         </LinearLayout>
 
@@ -173,27 +187,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="5dp">
+            android:layout_marginBottom="15dp">
 
             <TextView
                 android:id="@+id/title_direction"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.6"
                 android:text="@string/direzsub_section"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="2dp"
-                android:background="@drawable/my_border"/>
+                android:textColor="@color/primary"
+                android:gravity="right"
+                android:textAlignment="gravity"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/direction"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.4"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/my_border"/>
+                android:layout_marginLeft="15dp"/>
 
         </LinearLayout>
 
@@ -202,27 +219,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="5dp">
+            android:layout_marginBottom="15dp">
 
             <TextView
                 android:id="@+id/title_distance"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.6"
                 android:text="@string/distance"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="2dp"
-                android:background="@drawable/my_border"/>
+                android:textColor="@color/primary"
+                android:gravity="right"
+                android:textAlignment="gravity"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/distance"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.4"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/my_border"/>
+                android:layout_marginLeft="15dp"/>
 
         </LinearLayout>
 
@@ -231,27 +251,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="5dp" >
+            android:layout_marginBottom="15dp" >
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.6"
                 android:text="@string/transfered"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="2dp"
-                android:background="@drawable/my_border" />
+                android:textColor="@color/primary"
+                android:gravity="right"
+                android:textAlignment="gravity"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/transfered"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.4"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/my_border" />
+                android:layout_marginLeft="15dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -259,7 +282,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="15dp"
             android:visibility="gone">
 
             <TextView
@@ -267,20 +290,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.6"
                 android:text="@string/messaggio"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="2dp"
-                android:background="@drawable/my_border"/>
+                android:textColor="@color/primary"
+                android:gravity="right"
+                android:textAlignment="gravity"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/messaggio"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="1"
+                android:layout_weight="0.4"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/my_border"/>
+                android:layout_marginLeft="15dp"/>
 
         </LinearLayout>
 
@@ -289,22 +315,36 @@
             android:layout_height="wrap_content"
             android:text="VIRTUAL REALITY"
             android:id="@+id/btnReality"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/accent"
+            android:textColor="@color/background_white"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="CONTINUA"
             android:id="@+id/btnContinua"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/accent"
+            android:textColor="@color/background_white"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="CHIUDI CATENA"
             android:id="@+id/btnChiudi"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/accent"
+            android:textColor="@color/background_white"/>
 
     </TableLayout>
 </ScrollView>
-

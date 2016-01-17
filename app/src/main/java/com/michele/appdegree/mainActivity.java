@@ -77,12 +77,16 @@ public class mainActivity extends FragmentActivity implements
         actionBar.setCustomView(R.layout.custom_actionbar);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+        //actionBar.setDisplayShowHomeEnabled(true);
+        //actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#03A9F4")));
 
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(getResources().getColor(R.color.primary_dark));
+        window.setNavigationBarColor(getResources().getColor(R.color.primary));
 
         // registra il tokenid
         GcmPushNotifications registration = new GcmPushNotifications();
@@ -179,6 +183,9 @@ public class mainActivity extends FragmentActivity implements
                         globals idUtente = (globals) getApplicationContext();
                         idUtente.setId(idU);
 
+                        ServerConnection getInfoUser = new ServerConnection();
+                        getInfoUser.getInfoUser(idU, this);
+
                         buttonsFragment btnFragment = new buttonsFragment();
                         changingFragment(btnFragment, "recallButtons", true, false);
 
@@ -258,6 +265,9 @@ public class mainActivity extends FragmentActivity implements
             } else {
                 globals idUtente = (globals) getApplicationContext();
                 idUtente.setId(idU);
+
+                ServerConnection getInfoUser = new ServerConnection();
+                getInfoUser.getInfoUser(idU, this);
 
                 if (ricordami.isChecked()) {
                     SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();

@@ -1,198 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- layout del menu iniziale -->
-
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#222222">
-
-<android.support.v4.widget.DrawerLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal">
-<TableLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#222222">
-
+    android:scrollbars="none"
+    android:layout_weight="1"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:baselineAligned="false">
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@drawable/border_bottom">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="20dp">
+                <ImageView
+                    android:id="@+id/imgUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"/>
+                <TextView
+                    android:id="@+id/nameUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10pt"
+                    android:textColor="@color/primary"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/button1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/mybutton"
-            android:orientation="vertical"
-            style="@android:style/Widget.Button"
-            android:layout_weight="1">
-
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:background="@drawable/border_bottom">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/camera_icon2"/>
-
+                android:src="@mipmap/icona_camera"
+                android:layout_marginLeft="15dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/button01"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="25dp"
+                android:textColor="@color/primary"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/button2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/mybutton"
-            android:orientation="vertical"
-            style="@android:style/Widget.Button"
-            android:layout_weight="1">
-
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@drawable/border_bottom">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/gallery_icon"/>
-
+                android:src="@mipmap/icona_galleria"
+                android:layout_marginLeft="15dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/button02"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="25dp"
+                android:textColor="@color/primary"
+                android:textStyle="bold" />
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:baselineAligned="false">
+        <LinearLayout
+            android:id="@+id/button07"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@drawable/border_bottom">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icona_notifiche"
+                android:layout_marginLeft="15dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button06"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="25dp"
+                android:textColor="@color/primary"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/button4"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/mybutton"
-            android:orientation="vertical"
-            style="@android:style/Widget.Button">
-
+            android:orientation="horizontal"
+            android:background="@drawable/border_bottom">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/mappe_icon"/>
-
+                android:src="@mipmap/icona_posizioni"
+                android:layout_marginLeft="15dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/button03"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
-
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="25dp"
+                android:textColor="@color/primary"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/button5"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/mybutton"
-            android:orientation="vertical"
-            style="@android:style/Widget.Button">
-
+            android:orientation="horizontal"
+            android:background="@drawable/border_bottom">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/bussola_icon"/>
-
+                android:src="@mipmap/icona_calibrazione"
+                android:layout_marginLeft="15dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/button04"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="25dp"
+                android:textColor="@color/primary"
+                android:textStyle="bold" />
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:baselineAligned="false">
-
         <LinearLayout
-            style="@android:style/Widget.Button"
             android:id="@+id/button06"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/mybutton"
-            android:orientation="vertical" >
-
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            android:background="@drawable/border_bottom">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/gallery_icon" />
-
+                android:src="@mipmap/bussola_icon"
+                android:layout_marginLeft="15dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/button05"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </LinearLayout>
-
-        <LinearLayout
-            style="@android:style/Widget.Button"
-            android:id="@+id/button07"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/mybutton"
-            android:orientation="vertical"
-            android:alpha="1">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/bussola_icon" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/button06"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:text="@string/button04"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginTop="18dp"
+                android:layout_marginLeft="25dp"
+                android:textColor="@color/primary"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
-
-</TableLayout>
-</android.support.v4.widget.DrawerLayout>
-
-</FrameLayout>
+</ScrollView>

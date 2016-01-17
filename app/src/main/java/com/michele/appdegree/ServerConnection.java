@@ -251,6 +251,42 @@ public class ServerConnection {
         return id;
     }
 
+    public void getInfoUser(String idUtente, Activity main){
+
+        try{
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://esamiuniud.altervista.org/tesi/getInfoUser.php");
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("idU", idUtente);
+
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("jsonInfoUser", jsonObject.toString()));
+
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            response = httpclient.execute(httppost);
+            entity = response.getEntity();
+            id = EntityUtils.toString(entity, HTTP.UTF_8);
+
+            String nome = id.substring(0, id.indexOf(","));
+            String immagine = id.substring(id.indexOf(",")+1);
+
+            if(immagine.equals("")){
+                immagine="default.jpg";
+            }
+
+            globals infoUtente = (globals) main.getApplicationContext();
+            infoUtente.setNomeUtente(nome);
+            infoUtente.setImgUtente(immagine);
+
+            Log.d("nome", nome+", "+immagine);
+
+        }
+        catch (Exception e){
+            Log.d("errore", "errore "+e);
+        }
+    }
+
     public void updateLocation(double lat, double lon, float acc, float speed, Activity main){
         try{
 

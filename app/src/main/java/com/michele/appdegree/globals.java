@@ -10,6 +10,8 @@ public class globals extends Application {
     private String id;
     private String idNotifica;
     private Boolean bool;
+    private String nomeUtente;
+    private String imgUtente;
     //private final static String baseServerUrl = "http://esamiuniud.altervista.org/";
 
     public String getId() {
@@ -18,6 +20,22 @@ public class globals extends Application {
 
     public void setId(String idR) {
         id = idR;
+    }
+
+    public String getNomeUtente() {
+        return nomeUtente;
+    }
+
+    public void setNomeUtente(String nomeU) {
+        nomeUtente = nomeU;
+    }
+
+    public String getImgUtente() {
+        return imgUtente;
+    }
+
+    public void setImgUtente(String imgU) {
+        imgUtente = imgU;
     }
 
     public String getIdNotifica() {

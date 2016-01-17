@@ -11,9 +11,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.michele.fragmentexample.R;
+import com.squareup.picasso.Picasso;
 
 public class buttonsFragment extends Fragment {
 
@@ -61,6 +64,20 @@ public class buttonsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.buttons,
                 container, false);
+
+        globals infoUtente = (globals) getActivity().getApplicationContext();
+        String nomeUtente = infoUtente.getNomeUtente();
+        String imgUtente = infoUtente.getImgUtente();
+
+        ImageView imgUser = (ImageView) view.findViewById(R.id.imgUser);
+        TextView imgName = (TextView) view.findViewById(R.id.nameUser);
+
+        String urlUserImage = "http://esamiuniud.altervista.org/tesi/imgUsers/" + imgUtente;
+
+        // do Picasso
+        Picasso.with(getActivity()).load(urlUserImage).transform(new CircleTransform()).into(imgUser);
+
+        imgName.setText(nomeUtente);
 
         // pulsanti dell'interfaccia
         final LinearLayout button =
@@ -189,6 +206,13 @@ public class buttonsFragment extends Fragment {
         } else if(gps_enabled) {
             GpsEnabled = true;
         }
+    }
+
+    @Override
+    public void onResume() {
+        //getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
+
+        super.onResume();
     }
 
 }

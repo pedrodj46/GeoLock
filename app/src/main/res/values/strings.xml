@@ -9,7 +9,7 @@
     <string name="button03">POSIZIONI</string>
     <string name="button04">CALIBRAZIONE</string>
     <string name="button05">INVIA FOTO</string>
-    <string name="button06">LISTA NOTIFICHE</string>
+    <string name="button06">NOTIFICHE</string>
 
     <!-- GPS CHECK STRINGS -->
     <string name="gps_network_not_enabled">GPS DISATTIVATO</string>
@@ -48,15 +48,15 @@
     <string name="direction_prompt">Choose a direction</string>
 
     <!-- gallery photo details fragment -->
-    <string name="name_section">Nome:</string>
-    <string name="lat_section">Latitudine:</string>
-    <string name="long_section">Longitudine:</string>
-    <string name="address_section">Indirizzo:</string>
-    <string name="direzobs_section">Direzione in cui era rivolto il dispositivo:</string>
-    <string name="direzsub_section">Direzione di movimento del soggetto:</string>
-    <string name="distance">Distanza tra il dispositivo e il soggetto:</string>
-    <string name="transfered">Aperta:</string>
-    <string name="messaggio">Messaggio:</string>
+    <string name="name_section">NOME FOTO</string>
+    <string name="lat_section">LATITUDINE</string>
+    <string name="long_section">LONGITUDINE</string>
+    <string name="address_section">INDIRIZZO</string>
+    <string name="direzobs_section">DIREZIONE DISPOSITIVO</string>
+    <string name="direzsub_section">DIREZIONE SOGGETTO</string>
+    <string name="distance">DISTANZA</string>
+    <string name="transfered">CATENA APERTA</string>
+    <string name="messaggio">MESSAGGIO CHIUSURA</string>
 
     <!-- utility calibrazione -->
     <string name="calibration">Calibrazione Bussola</string>

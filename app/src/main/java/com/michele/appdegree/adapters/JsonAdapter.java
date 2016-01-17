@@ -1,7 +1,6 @@
 package com.michele.appdegree.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -44,9 +43,9 @@ public class JsonAdapter extends SimpleAdapter {
             String letta = ((Map<String, String>) getItem(position)).get("letta");
 
             if (letta.equals("0")) {
-                v.setBackgroundColor(Color.RED);
+                v.setBackgroundColor(v.getResources().getColor(R.color.notification_unread));
             } else {
-                v.setBackgroundColor(Color.GRAY);
+                v.setBackgroundColor(v.getResources().getColor(R.color.background_white));
             }
 
             String aperta = ((Map<String, String>) getItem(position)).get("aperta");
@@ -60,11 +59,11 @@ public class JsonAdapter extends SimpleAdapter {
 
             if(aperta.equals("1")){
                 // do Picasso
-                Picasso.with(v.getContext()).load(url_icon+"check.png").fit().centerCrop().into(icon);
+                Picasso.with(v.getContext()).load(url_icon+"check_new.png").fit().centerCrop().into(icon);
             }
             else{
                 // do Picasso
-                Picasso.with(v.getContext()).load(url_icon+"times.png").fit().centerCrop().into(icon);
+                Picasso.with(v.getContext()).load(url_icon+"times_new.png").fit().centerCrop().into(icon);
             }
         }
 

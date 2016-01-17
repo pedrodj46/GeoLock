@@ -23,9 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="@drawable/capturebutton"/>
+            android:background="@color/accent"
+            android:textColor="@color/background_white"/>
         <Button
             android:id="@+id/button_capture"
             android:text="@string/button_capture"
@@ -33,16 +33,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_weight="1"
-            android:background="@drawable/capturebutton"/>
+            android:background="@color/notification_unread"
+            android:textColor="@color/background_white"/>
         <Button
             android:id="@+id/button_switch"
             android:text="@string/button_switch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:background="@drawable/capturebutton"/>
+            android:background="@color/accent"
+            android:textColor="@color/background_white"/>
     </LinearLayout>
 
     <LinearLayout

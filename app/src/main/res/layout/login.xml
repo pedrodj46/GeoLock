@@ -37,7 +37,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="Username" />
+                android:hint="Username"
+                android:textColor="@color/background_white"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
@@ -52,7 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Password"/>
+                android:hint="Password"
+                android:textColor="@color/background_white"/>
         </android.support.design.widget.TextInputLayout>
 
         <CheckBox
@@ -62,7 +64,7 @@
             android:id="@+id/loginCheckbox"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
-            android:textColor="#fff" />
+            android:textColor="@color/background_white" />
 
         <Button
             android:layout_width="match_parent"
@@ -71,7 +73,8 @@
             android:id="@+id/loginSend"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:background="@color/accent"/>
+            android:background="@color/accent"
+            android:textColor="@color/background_white"/>
     </LinearLayout>
 
 </ScrollView>

@@ -200,7 +200,8 @@ public class mainGallery extends Fragment {
 
     @Override
     public void onResume() {
-        // TODO Auto-generated method stub
+        //getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+
         super.onResume();
     }
 
