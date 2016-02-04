@@ -527,19 +527,20 @@ public class mainActivity extends FragmentActivity implements
 
     // inizializza l'apertura dei dettagli riguardanti una foto quando viene cliccata sul listener
     // del fragment gallery
-    /*public void onPictureSelected(String imagePath) {
-        galleryPhotoDeTails newFragment = new galleryPhotoDeTails();
-        // invio il percorso dell'immagine da visualizzare nel nuovo fragment
-        newFragment.displayImage(imagePath);
-        changingFragment(newFragment, "galleryImageDeTails", true, false);
-    }*/
-
     public void onPhotoSelected(String idF){
         photoDetails newFragment = new photoDetails();
         // invio l'id della notifica da visualizzare nel nuovo fragment
         newFragment.photoID(idF);
 
         changingFragment(newFragment, "photoDetails", true, false);
+    }
+
+    public void onNotificationVirtual(String idN){
+        notificationVirtual newFragment = new notificationVirtual();
+        // invio l'id della notifica da visualizzare nel nuovo fragment
+        newFragment.notificationID(idN);
+
+        changingFragment(newFragment, "notificationVirtual", true, false);
     }
 
     public void onNotificationSelected(String idN){

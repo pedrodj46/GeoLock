@@ -88,13 +88,8 @@ public class ServerConnection {
         idNo= idNotifica.getIdNotifica();
 
         if(isConnected()) {
-            //Toast.makeText(Main, "Connesso con il server!", Toast.LENGTH_SHORT).show();
-
-            // indirizzo a cui inviare i dati
-            //new HttpAsyncTask().execute("http://esamiuniud.altervista.org/tesi/ajax.php");
 
             if (invia()) {
-                //Toast.makeText(Main, "Data Sent", Toast.LENGTH_LONG).show();
                 if(uploadImage()){
                     Ok = true;
                 }
@@ -205,8 +200,8 @@ public class ServerConnection {
             String json = "";
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("username", username.toString());
-            jsonObject.accumulate("password", password.toString());
+            jsonObject.accumulate("username", username);
+            jsonObject.accumulate("password", password);
             jsonObject.accumulate("device", DeviceName.getDeviceName());
             jsonObject.accumulate("androidid", Settings.Secure.getString(main.getContentResolver(), Settings.Secure.ANDROID_ID));
 
@@ -233,7 +228,7 @@ public class ServerConnection {
             httppost = new HttpPost("http://esamiuniud.altervista.org/tesi/getPhotoDetails.php");
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("idF", idFoto.toString());
+            jsonObject.accumulate("idF", idFoto);
 
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("jsonIdPhoto", jsonObject.toString()));
