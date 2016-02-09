@@ -109,7 +109,9 @@ public class mainActivity extends FragmentActivity implements
                     changingFragment(firstFragment, "recallLogin", false, false);
                 }
                 else if(value==1){
-                    // virtual reality
+                    globals isFromNotifica = (globals) getApplicationContext();
+                    isFromNotifica.setIsFromNotifica(true);
+                    onNotificationVirtual(idN);
                 }
                 else if(value==2){
                     globals isFromNotifica = (globals) getApplicationContext();
@@ -117,6 +119,8 @@ public class mainActivity extends FragmentActivity implements
                     onNotificationContinueSelected(idN);
                 }
                 else if(value==3){
+                    globals isFromNotifica = (globals) getApplicationContext();
+                    isFromNotifica.setIsFromNotifica(true);
                     onNotificationCloseSelected(idN);
                 }
             }
@@ -664,7 +668,20 @@ public class mainActivity extends FragmentActivity implements
         // recupero i frammenti interessati e permetto solo a questi di tornare al fragment
         // precedente tramite il back button
         FragmentManager myFragment = getSupportFragmentManager();
-        if((myFragment.findFragmentByTag("recallButtons") != null &&
+        globals backToNotification = (globals) getApplicationContext();
+        boolean backTN;
+        if(backToNotification.getIsFromNotifica()!=null) {
+            backTN = backToNotification.getIsFromNotifica();
+        }
+        else{
+            backTN = false;
+        }
+        if(backTN){
+            backToNotification.setIsFromNotifica(false);
+            buttonsFragment btnFragment = new buttonsFragment();
+            changingFragment(btnFragment, "recallButtons", true, false);
+        }
+        else if((myFragment.findFragmentByTag("recallButtons") != null &&
                 myFragment.findFragmentByTag("recallButtons").isVisible()) || (myFragment.findFragmentByTag("recallLogin") != null &&
                 myFragment.findFragmentByTag("recallLogin").isVisible())) {
             // in tutti gli altri casi il back button attiva una finestra di dialogo che

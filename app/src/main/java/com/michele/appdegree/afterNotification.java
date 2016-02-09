@@ -103,6 +103,13 @@ public class afterNotification extends FragmentActivity {
                 startActivity(intent);
                 finish();
             }
+            else{
+                globals idUtente = (globals) getApplicationContext();
+                idUtente.setId(idU);
+
+                ServerConnection getInfoUser = new ServerConnection();
+                getInfoUser.getInfoUser(idU, this);
+            }
         }
         else{
             Intent intent = new Intent(afterNotification.this, mainActivity.class);
@@ -209,6 +216,11 @@ public class afterNotification extends FragmentActivity {
             mTransfered.setText("Si");
             Button btn1 = (Button) findViewById(R.id.btnReality);
             btn1.setVisibility(View.VISIBLE);
+            btn1.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    btn1Clicked();
+                }
+            });
             Button btn2 = (Button) findViewById(R.id.btnContinua);
             btn2.setVisibility(View.VISIBLE);
             btn2.setOnClickListener(new View.OnClickListener() {
@@ -224,6 +236,18 @@ public class afterNotification extends FragmentActivity {
                 }
             });
         }
+
+    }
+
+    public void btn1Clicked() {
+
+        Intent intent = new Intent(afterNotification.this, mainActivity.class);
+        Bundle b = new Bundle();
+        b.putString("idN", idNotifica);
+        b.putInt("case", 1);
+        intent.putExtras(b);
+        startActivity(intent);
+        finish();
 
     }
 
