@@ -13,7 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.michele.appdegree.adapters.JsonAdapter;
+import com.michele.appdegree.adapters.JsonAdapterPhoto;
 import com.michele.fragmentexample.R;
 
 import org.apache.http.HttpEntity;
@@ -174,7 +174,7 @@ public class mainGallery extends Fragment {
 
                         list.add(map);
 
-                        ListAdapter adapter = new JsonAdapter(getActivity(), list,
+                        ListAdapter adapter = new JsonAdapterPhoto(getActivity(), list,
                                 R.layout.mylist,
                                 new String[] { "nome", "data" }, new int[] {
                                 R.id.item, R.id.testo1});

@@ -48,6 +48,8 @@ public class mainNotification extends Fragment {
 
     public interface ToolbarListener {
         public void onNotificationSelected(String idN);
+        public void onNotificationContinueSelected(String idN);
+        public void onNotificationCloseSelected(String idN);
     }
 
     @Override
@@ -177,12 +179,13 @@ public class mainNotification extends Fragment {
 
                         list.add(map);
 
-                        ListAdapter adapter = new JsonAdapter(getActivity(), list,
-                                R.layout.mylist_notification,
+                        ListAdapter adapter = new JsonAdapter(getActivity(), mainNotification.this, list,
+                                R.layout.mylist_notification_new,
                                 new String[] { "nome", "nomeUtente" }, new int[] {
                                 R.id.item, R.id.testo1});
 
                         list_notifications.setAdapter(adapter);
+
                         list_notifications.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view,
@@ -199,6 +202,18 @@ public class mainNotification extends Fragment {
                 }
             }
         }
+    }
+
+    public void notificationInfo(int pos) {
+        activityCallback.onNotificationSelected(list.get(+pos).get("idN"));
+    }
+
+    public void notificationContinua(int pos) {
+        activityCallback.onNotificationContinueSelected(list.get(+pos).get("idN"));
+    }
+
+    public void notificationChiudi(int pos) {
+        activityCallback.onNotificationCloseSelected(list.get(+pos).get("idN"));
     }
 
     @Override

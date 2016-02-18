@@ -670,8 +670,10 @@ public class mainActivity extends FragmentActivity implements
         FragmentManager myFragment = getSupportFragmentManager();
         globals backToNotification = (globals) getApplicationContext();
         boolean backTN;
+        String idNotification="";
         if(backToNotification.getIsFromNotifica()!=null) {
             backTN = backToNotification.getIsFromNotifica();
+            idNotification = backToNotification.getIdNotifica();
         }
         else{
             backTN = false;
@@ -680,6 +682,9 @@ public class mainActivity extends FragmentActivity implements
             backToNotification.setIsFromNotifica(false);
             buttonsFragment btnFragment = new buttonsFragment();
             changingFragment(btnFragment, "recallButtons", true, false);
+            mainNotification newFragment = new mainNotification();
+            changingFragment(newFragment, "recallNotification", true, false);
+            //onNotificationSelected(idNotification);
         }
         else if((myFragment.findFragmentByTag("recallButtons") != null &&
                 myFragment.findFragmentByTag("recallButtons").isVisible()) || (myFragment.findFragmentByTag("recallLogin") != null &&

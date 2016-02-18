@@ -11,4 +11,6 @@
     <color name="background_white">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
     <color name="notification_unread">#F44336</color>
+    <color name="notification_unread_light">#5bf44336</color>
+    <color name="accent_material_light">#ffffff</color>
 </resources>
